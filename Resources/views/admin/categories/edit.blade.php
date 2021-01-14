@@ -2,13 +2,13 @@
 
 @section('content-header')
   <h1>
-    {{ trans('blog::category.title.edit category') }}
+    {{ trans('blog::categories.title.edit category') }}
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('dashboard.index') }}"><i
           class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-    <li><a href="{{ route('admin.blog.category.index') }}">{{ trans('blog::category.title.categories') }}</a></li>
-    <li class="active">{{ trans('blog::category.title.edit category') }}</li>
+    <li><a href="{{ route('admin.blog.category.index') }}">{{ trans('blog::categories.title.categories') }}</a></li>
+    <li class="active">{{ trans('blog::categories.title.edit category') }}</li>
   </ol>
 @stop
 
@@ -82,7 +82,7 @@
                 </button>
               </div>
               <div class="form-group">
-                <label>{{trans('blog::category.form.parent category')}}</label>
+                <label>{{trans('blog::categories.form.parent category')}}</label>
               </div>
             </div>
             <div class="box-body">
@@ -113,7 +113,7 @@
                 </button>
               </div>
               <div class="form-group">
-                <label>{{trans('blog::category.form.image')}}</label>
+                <label>{{trans('blog::categories.form.image')}}</label>
               </div>
             </div>
             <div class="box-body">
@@ -133,7 +133,7 @@
                   </button>
                 </div>
                 <div class="form-group">
-                  <label>{{trans('blog::category.form.secondary image')}}</label>
+                  <label>{{trans('blog::categories.form.secondary image')}}</label>
                 </div>
               </div>
               <div class="box-body">

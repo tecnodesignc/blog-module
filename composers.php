@@ -1,3 +1,3 @@
 <?php
 
-view()->composer(['post::admin.create', 'post::admin.edit','category::admin.create', 'category::admin.edit'], \Modules\Blog\Composers\TemplateViewComposer::class);
+view()->composer(['blog::admin.posts.create', 'post::admin.posts.edit','blog::admin.categories.create', 'category::admin.categories.edit'], \Modules\Blog\Composers\TemplateViewComposer::class);

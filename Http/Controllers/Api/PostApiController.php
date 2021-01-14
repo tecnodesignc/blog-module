@@ -139,7 +139,7 @@ class PostApiController extends BaseApiController
             $this->post->update($post, $data);
 
             //Response
-            $response = ["data" => trans('iblog::common.messages.resource updated')];
+            $response = ["data" => trans('blog::common.messages.resource updated')];
             \DB::commit();//Commit to DataBase
         } catch (\Exception $e) {
             Log::Error($e);
@@ -172,7 +172,7 @@ class PostApiController extends BaseApiController
             $this->post->destroy($post);
 
             //Response
-            $response = ["data" => trans('iblog::common.messages.resource deleted')];
+            $response = ["data" => trans('blog::common.messages.resource deleted')];
             \DB::commit();//Commit to Data Base
         } catch (\Exception $e) {
             Log::Error($e);

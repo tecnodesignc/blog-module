@@ -25,7 +25,8 @@ return [
         'description'=>'Descripción',
         'parent category'=>'Categoria Padre',
         'secondary image'=>'Imagen  Segundaria',
-        'image'=>'Imagen Principal'
+        'image'=>'Imagen Principal',
+        'template' => 'Nombre de la plantilla de la categoria',
     ],
     'messages' => [
     ],

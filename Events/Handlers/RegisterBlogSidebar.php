@@ -37,7 +37,7 @@ class RegisterBlogSidebar implements \Maatwebsite\Sidebar\SidebarExtender
     public function extendWith(Menu $menu)
     {
         $menu->group(trans('core::sidebar.content'), function (Group $group) {
-            $group->item(trans('blog::blogs.title.blogs'), function (Item $item) {
+            $group->item(trans('blog::common.blog'), function (Item $item) {
                 $item->icon('fa fa-copy');
                 $item->weight(config('encore.blog.config.sidebar-position', 15));
                 $item->weight(10);

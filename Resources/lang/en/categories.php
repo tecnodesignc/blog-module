@@ -25,7 +25,8 @@ return [
         'description'=>'Description',
         'parent category'=>'Parent Category',
         'secondary image'=>'Secondary Image',
-        'image'=>'Main Image'
+        'image'=>'Main Image',
+        'template' => 'Category template name',
     ],
     'messages' => [
     ],

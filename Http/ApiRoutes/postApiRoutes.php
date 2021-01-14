@@ -7,35 +7,35 @@ use Illuminate\Routing\Router;
 $router->group(['prefix' => 'posts'], function (Router $router) {
     //Route create
     $router->post('/', [
-        'as' => 'api.iblog.post.create',
+        'as' => 'api.blog.post.create',
         'uses' => 'PostApiController@create',
         'middleware' => ['auth:api']
     ]);
 
     //Route index
     $router->get('/', [
-        'as' => 'api.iblog.post.get.items.by',
+        'as' => 'api.blog.post.get.items.by',
         'uses' => 'PostApiController@index',
         //'middleware' => ['auth:api']
     ]);
 
     //Route show
     $router->get('/{criteria}', [
-        'as' => 'api.iblog.post.get.item',
+        'as' => 'api.blog.post.get.item',
         'uses' => 'PostApiController@show',
         //'middleware' => ['auth:api']
     ]);
 
     //Route update
     $router->put('/{criteria}', [
-        'as' => 'api.iblog.post.update',
+        'as' => 'api.blog.post.update',
         'uses' => 'PostApiController@update',
         'middleware' => ['auth:api']
     ]);
 
     //Route delete
     $router->delete('/{criteria}', [
-        'as' => 'api.iblog.post.delete',
+        'as' => 'api.blog.post.delete',
         'uses' => 'PostApiController@delete',
         'middleware' => ['auth:api']
     ]);

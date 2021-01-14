@@ -2,11 +2,11 @@
 
 @section('content-header')
     <h1>
-        {{ trans('blog::category.title.categories') }}
+        {{ trans('blog::categories.title.categories') }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li class="active">{{ trans('blog::category.title.categories') }}</li>
+        <li class="active">{{ trans('blog::categories.title.categories') }}</li>
     </ol>
 @stop
 
@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
                     <a href="{{ route('admin.blog.category.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
-                        <i class="fa fa-pencil"></i> {{ trans('blog::category.button.create category') }}
+                        <i class="fa fa-pencil"></i> {{ trans('blog::categories.button.create category') }}
                     </a>
                 </div>
             </div>
@@ -29,10 +29,10 @@
                         <table class="data-table table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>{{ trans('blog::category.table.id') }}</th>
-                                <th>{{ trans('blog::category.table.title') }}</th>
-                                <th>{{ trans('blog::category.table.slug') }}</th>
-                                <th>{{ trans('blog::category.table.no post') }}</th>
+                                <th>{{ trans('blog::categories.table.id') }}</th>
+                                <th>{{ trans('blog::categories.table.title') }}</th>
+                                <th>{{ trans('blog::categories.table.slug') }}</th>
+                                <th>{{ trans('blog::categories.table.no post') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -79,10 +79,10 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>{{ trans('blog::category.table.id') }}</th>
-                                <th>{{ trans('blog::category.table.title') }}</th>
-                                <th>{{ trans('blog::category.table.slug') }}</th>
-                                <th>{{ trans('blog::category.table.no post') }}</th>
+                                <th>{{ trans('blog::categories.table.id') }}</th>
+                                <th>{{ trans('blog::categories.table.title') }}</th>
+                                <th>{{ trans('blog::categories.table.slug') }}</th>
+                                <th>{{ trans('blog::categories.table.no post') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
                                 <th>{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -104,7 +104,7 @@
 @section('shortcuts')
     <dl class="dl-horizontal">
         <dt><code>c</code></dt>
-        <dd>{{ trans('blog::category.title.create category') }}</dd>
+        <dd>{{ trans('blog::categories.title.create category') }}</dd>
     </dl>
 @stop
 

@@ -151,7 +151,7 @@ class CategoryApiController extends BaseApiController
             $this->category->update($category, $data);
 
             //Response
-            $response = ["data" => trans('iblog::common.messages.resource updated')];
+            $response = ["data" => trans('blog::common.messages.resource updated')];
             \DB::commit();//Commit to DataBase
         } catch (\Exception $e) {
             \DB::rollback();//Rollback to Data Base
@@ -184,7 +184,7 @@ class CategoryApiController extends BaseApiController
             $this->category->destroy($category);
 
             //Response
-            $response = ["data" => trans('iblog::common.messages.resource deleted')];
+            $response = ["data" => trans('blog::common.messages.resource deleted')];
             \DB::commit();//Commit to Data Base
         } catch (\Exception $e) {
             \DB::rollback();//Rollback to Data Base

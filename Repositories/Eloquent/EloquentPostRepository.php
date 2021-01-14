@@ -38,7 +38,7 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
             $q->where('category_id', $id);
         })->whereStatus(Status::PUBLISHED)->where('created_at', '<', date('Y-m-d H:i:s'))->orderBy('created_at', 'DESC');
 
-        return $query->paginate(setting('iblog::posts-per-page'));
+        return $query->paginate(setting('blog::posts-per-page'));
     }
 
 
@@ -63,7 +63,7 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
 
     /**
      * create a resource
-     * Create a iblog post
+     * Create a blog post
      * @param array $data
      * @return Post
      */

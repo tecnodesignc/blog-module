@@ -66,7 +66,7 @@ class PostController extends AdminBaseController
         } else {
             $posts = $this->post->paginate(20);
         }
-        return view('iblog::admin.posts.index', compact('posts'));
+        return view('blog::admin.posts.index', compact('posts'));
     }
 
     /**

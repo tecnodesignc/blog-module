@@ -2,13 +2,13 @@
 
 @section('content-header')
    <h1>
-      {{ trans('blog::category.title.create category') }}
+      {{ trans('blog::categories.title.create category') }}
    </h1>
    <ol class="breadcrumb">
       <li><a href="{{ route('dashboard.index') }}"><i
                     class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-      <li><a href="{{ route('admin.blog.category.index') }}">{{ trans('blog::category.title.categories') }}</a></li>
-      <li class="active">{{ trans('blog::category.title.create category') }}</li>
+      <li><a href="{{ route('admin.blog.category.index') }}">{{ trans('blog::categories.title.categories') }}</a></li>
+      <li class="active">{{ trans('blog::categories.title.create category') }}</li>
    </ol>
 @stop
 
@@ -81,7 +81,7 @@
                         </button>
                      </div>
                      <div class="form-group">
-                        <label>{{trans('blog::category.form.parent category')}}</label>
+                        <label>{{trans('blog::categories.form.parent category')}}</label>
                      </div>
                   </div>
                   <div class="box-body">
@@ -95,7 +95,7 @@
                      </select><br>
                       <hr/>
                       <div class='form-group{{ $errors->has("template") ? ' has-error' : '' }}'>
-                          {!! Form::label("template", trans('blog::post.form.template')) !!}
+                          {!! Form::label("template", trans('blog::categories.form.template')) !!}
                           {!! Form::select("template", $all_templates_category, old("template", 'default'), ['class' => "form-control", 'placeholder' => trans('blog::posts.form.template')]) !!}
                           {!! $errors->first("template", '<span class="help-block">:message</span>') !!}
                       </div>
@@ -112,7 +112,7 @@
                         </button>
                      </div>
                      <div class="form-group">
-                        <label>{{trans('blog::category.form.image')}}</label>
+                        <label>{{trans('blog::categories.form.image')}}</label>
                      </div>
                   </div>
                   <div class="box-body">
@@ -132,7 +132,7 @@
                            </button>
                         </div>
                         <div class="form-group">
-                           <label>{{trans('blog::category.form.secondary image')}}</label>
+                           <label>{{trans('blog::categories.form.secondary image')}}</label>
                         </div>
                      </div>
                      <div class="box-body">

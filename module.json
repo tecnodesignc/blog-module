@@ -9,6 +9,9 @@
         "Modules\\Blog\\Providers\\RouteServiceProvider"
     ],
     "aliases": {},
-    "files": [],
+    "files": [
+        "composers.php",
+        "helpers.php"
+    ],
     "requires": []
 }

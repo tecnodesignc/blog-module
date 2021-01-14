@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'iblog' => 'Blog',
+    'blog' => 'Blog',
 
     'button' => [
         "read more"=>"Read More"
@@ -25,7 +25,7 @@ return [
     ],
     'status' => [
         'draft' => 'Draft',
-        'pending' => 'Pending review',
+        'pending review' => 'Pending review',
         'published' => 'Published',
         'unpublished' => 'Unpublished',
     ],
