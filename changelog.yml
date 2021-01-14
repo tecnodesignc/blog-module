@@ -1,0 +1,5 @@
+url: https://github.com/tecnodesignc/blog-module
+versions:
+    "1.0.0":
+        added:
+          - initial Version

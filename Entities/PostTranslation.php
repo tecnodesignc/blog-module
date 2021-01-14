@@ -1,0 +1,78 @@
+<?php
+
+namespace Modules\Blog\Entities;
+
+use Illuminate\Database\Eloquent\Model;
+use Modules\Blog\Events\PostContentIsRendering;
+
+class PostTranslation extends Model
+{
+    public $timestamps = false;
+    protected $fillable = [
+        'title',
+        'slug',
+        'summary',
+        'content',
+        'meta_title',
+        'meta_description',
+        'og_title',
+        'og_description',
+        'og_image',
+        'og_type',
+        'meta_keywords',
+        'translatable_options'
+    ];
+    protected $table = 'blog__post_translations';
+
+
+    protected $casts = [
+        'translatable_options' => 'array'
+    ];
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
+
+    public function getTranslatableOptionAttribute($value) {
+
+        $options=json_decode($value);
+        return $options;
+
+
+    }
+    /**
+     * @return mixed
+     */
+    public function getMetaDescriptionAttribute()
+    {
+
+        return $this->meta_description ?? $this->summary;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMetaTitleAttribute()
+    {
+
+        return $this->meta_title ?? $this->title;
+    }
+
+    public function getContentAttribute($content)
+    {
+        event($event = new PostContentIsRendering($content));
+
+        return $event->getContent();
+    }
+
+}
