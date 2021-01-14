@@ -3,7 +3,7 @@
     <div class="col-xs-12">
         <div class="content-cat" style="max-height:490px;overflow-y: auto;">
 
-            <label for="categories"><strong>{{trans('blog::post.table.categories')}}</strong></label>
+            <label for="categories"><strong>{{trans('blog::posts.table.categories')}}</strong></label>
 
 
             @if(count($categories)>0)

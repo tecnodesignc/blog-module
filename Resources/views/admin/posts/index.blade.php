@@ -2,12 +2,12 @@
 
 @section('content-header')
     <h1>
-        {{ trans('blog::post.title.posts') }}
+        {{ trans('blog::posts.title.posts') }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i
                         class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li class="active">{{ trans('blog::post.title.posts') }}</li>
+        <li class="active">{{ trans('blog::posts.title.posts') }}</li>
     </ol>
 @stop
 
@@ -18,13 +18,13 @@
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
                     <a href="{{ route('admin.blog.post.create') }}" class="btn btn-primary btn-flat"
                        style="padding: 4px 10px;">
-                        <i class="fa fa-pencil"></i> {{ trans('blog::post.button.create post') }}
+                        <i class="fa fa-pencil"></i> {{ trans('blog::posts.button.create post') }}
                     </a>
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Lista de {{ trans('blog::post.title.posts') }}</h3>
+                    <h3 class="box-title">{{ trans('blog::posts.list resource') }}</h3>
                     <div class="box-tools">
                         {!! Form::open(['route' => ['admin.blog.post.index'], 'method' => 'get']) !!}
                         <div class="input-group input-group-sm" style="width: 250px; margin-bottom: 10px">
@@ -43,10 +43,10 @@
                         <table class="data-table table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th class="col-md-1">{{ trans('blog::post.table.id') }}</th>
-                                <th class="col-md-4">{{ trans('blog::post.table.title') }}</th>
-                                <th class="col-md-3">{{ trans('blog::post.table.slug') }}</th>
-                                <th class="col-md-1">{{ trans('blog::post.table.principal category') }}</th>
+                                <th class="col-md-1">{{ trans('blog::posts.table.id') }}</th>
+                                <th class="col-md-4">{{ trans('blog::posts.table.title') }}</th>
+                                <th class="col-md-3">{{ trans('blog::posts.table.slug') }}</th>
+                                <th class="col-md-1">{{ trans('blog::posts.table.principal category') }}</th>
                                 <th class="col-md-1">{{ trans('core::core.table.created at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
@@ -97,11 +97,12 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>{{ trans('blog::post.table.id') }}</th>
-                                <th>{{ trans('blog::post.table.title') }}</th>
-                                <th>{{ trans('blog::post.table.slug') }}</th>
-                                <th>{{ trans('core::core.table.created at') }}</th>
-                                <th>{{ trans('core::core.table.actions') }}</th>
+                                <th class="col-md-1">{{ trans('blog::posts.table.id') }}</th>
+                                <th class="col-md-4">{{ trans('blog::posts.table.title') }}</th>
+                                <th class="col-md-3">{{ trans('blog::posts.table.slug') }}</th>
+                                <th class="col-md-1">{{ trans('blog::posts.table.principal category') }}</th>
+                                <th class="col-md-1">{{ trans('core::core.table.created at') }}</th>
+                                <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -133,7 +134,7 @@
 @section('shortcuts')
     <dl class="dl-horizontal">
         <dt><code>c</code></dt>
-        <dd>{{ trans('blog::post.title.create post') }}</dd>
+        <dd>{{ trans('blog::posts.title.create post') }}</dd>
     </dl>
 @stop
 

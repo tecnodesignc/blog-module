@@ -2,13 +2,13 @@
 
 @section('content-header')
     <h1>
-        {{ trans('blog::post.title.edit post') }}
+        {{ trans('blog::posts.title.edit post') }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i
                         class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.blog.post.index') }}">{{ trans('blog::post.title.posts') }}</a></li>
-        <li class="active">{{ trans('blog::post.title.edit post') }}</li>
+        <li><a href="{{ route('admin.blog.post.index') }}">{{ trans('blog::posts.title.posts') }}</a></li>
+        <li class="active">{{ trans('blog::posts.title.edit post') }}</li>
     </ol>
 @stop
 
@@ -63,7 +63,7 @@
                                 </button>
                             </div>
                             <div class="form-group">
-                                <label>{{trans('blog::post.form.gallery')}}</label>
+                                <label>{{trans('blog::posts.form.gallery')}}</label>
                             </div>
                         </div>
                         <div class="box-body ">
@@ -99,7 +99,7 @@
                                 </button>
                             </div>
                             <div class="form-group">
-                                <label>{{trans('blog::post.form.Principal Category')}}</label>
+                                <label>{{trans('blog::posts.form.Principal Category')}}</label>
                             </div>
                         </div>
                         <div class="box-body">
@@ -128,7 +128,7 @@
                                 </button>
                             </div>
                             <div class="form-group">
-                                <label>{{trans('blog::post.form.Categories')}}</label>
+                                <label>{{trans('blog::posts.form.Categories')}}</label>
                             </div>
                         </div>
                         <div class="box-body">
@@ -145,7 +145,7 @@
                                 </button>
                             </div>
                             <div class="form-group">
-                                <label>{{trans('blog::post.form.created at')}}</label>
+                                <label>{{trans('blog::posts.form.created at')}}</label>
                             </div>
                         </div>
                         <div class="box-body">
@@ -171,7 +171,7 @@
                                 </button>
                             </div>
                             <div class="form-group">
-                                <label>{{trans('blog::post.form.image')}}</label>
+                                <label>{{trans('blog::posts.form.image')}}</label>
                             </div>
                         </div>
                         <div class="box-body">
@@ -214,7 +214,7 @@
                                             class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <label>{{trans('blog::post.form.editor')}}</label>
+                            <label>{{trans('blog::posts.form.editor')}}</label>
                         </div>
                         <div class="box-body">
                             <select name="user_id" id="user" class="form-control">
@@ -236,7 +236,7 @@
                                             class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <label>{{trans('blog::post.form.tags')}}</label>
+                            <label>{{trans('blog::posts.form.tags')}}</label>
                         </div>
                         <div class="box-body">
                             @tags('encorecms/post',$post)
@@ -253,7 +253,7 @@
                                     </button>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{trans('blog::post.form.secondary image')}}</label>
+                                    <label>{{trans('blog::posts.form.secondary image')}}</label>
                                 </div>
                             </div>
                             <div class="box-body">
