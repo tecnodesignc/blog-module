@@ -1,8 +1,9 @@
 {
     "name": "Blog",
     "alias": "blog",
-    "description": "",
+    "description": "The Blog module allows authorized users to maintain a blog.",
     "keywords": [],
+    "version": "1.0.1",
     "priority": 8888,
     "providers": [
         "Modules\\Blog\\Providers\\BlogServiceProvider",

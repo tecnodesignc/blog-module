@@ -57,6 +57,8 @@ return [
     'created_at' => 'Creation date',
     'parent' => 'Parent',
 
-
+    'admin_notes' => 'Notas de Administración',
+    'created_at' => 'Fecha de Creación',
+    'parent' => 'Superior',
 
 ];

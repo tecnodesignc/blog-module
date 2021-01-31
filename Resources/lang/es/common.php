@@ -19,7 +19,8 @@ return [
         'summary min 2'=>'La Descripciòn Corta debe contener mínimo dos caracteres',
         'resource updated'=>'Registro Actualizado',
         'resource deleted'=>'Registro Eliminado',
-        'resource created'=>'Registro Creado'
+        'resource created'=>'Registro Creado',
+        'template is required'=> 'La vista es requerida'
     ],
     'validation' => [
     ],
@@ -46,12 +47,12 @@ return [
     'optional'  =>  '(Opcional)',
 
     'summary' => 'Sumario',
-    'content' => 'Content',
+    'content' => 'Contenido',
+    'default_category' => 'Categoria por Defecto',
 
     'author' => 'Autor',
     'by'=>'por',
     'Posted on'=>'Publicado el',
-    'default_category' => 'Categoría Principal',
 
     'admin_notes' => 'Notas de Administración',
     'created_at' => 'Fecha de Creación',

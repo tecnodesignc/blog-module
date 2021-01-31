@@ -2,4 +2,12 @@ url: https://github.com/tecnodesignc/blog-module
 versions:
     "1.0.0":
         added:
-          - initial Version
+          - Initial Version
+    "1.0.1":
+        added:
+          - Sluggable Trait in entities traslates
+          - Requests validation in create and update
+        change:
+          - Helpres route PostRepository
+          - Route view composer.php
+          - Namespace PostTemplateApiControler
