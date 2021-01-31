@@ -27,7 +27,7 @@ if (!function_exists('get_posts')) {
 
         $options = array_merge($default_options, $options);
 
-        $post=app('Modules\blog\Repositories\PostRepository');
+        $post=app('Modules\Blog\Repositories\PostRepository');
         $params=json_decode(json_encode(["filter"=>$options,'include'=>['user', 'categories', 'category'],'take'=>$options['take'],'skip'=>$options['skip']]));
 
         return $post->getItemsBy($params);

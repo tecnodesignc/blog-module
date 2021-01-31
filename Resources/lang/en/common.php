@@ -19,7 +19,8 @@ return [
         'summary min 2'=>'The summary must contain at least two characters',
         'resource updated'=>'Resource Updated',
         'resource deleted'=>'Resource Deleted',
-        'resource created'=>'Resource Created'
+        'resource created'=>'Resource Created',
+        'template is required'=> 'The Template Is Required'
     ],
     'validation' => [
     ],

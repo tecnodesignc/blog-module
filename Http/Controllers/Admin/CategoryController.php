@@ -79,7 +79,7 @@ class CategoryController extends AdminBaseController
     public function edit(Category $category)
     {
         $categories = $this->category->all();
-        return view('blog::admin.categories.edit', compact('category'));
+        return view('blog::admin.categories.edit', compact('category','categories'));
     }
 
     /**

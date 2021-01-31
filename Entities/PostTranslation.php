@@ -4,10 +4,15 @@ namespace Modules\Blog\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\Blog\Events\PostContentIsRendering;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class PostTranslation extends Model
 {
+    use Sluggable;
+
     public $timestamps = false;
+
+
     protected $fillable = [
         'title',
         'slug',
