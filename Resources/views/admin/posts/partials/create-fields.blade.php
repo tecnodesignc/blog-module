@@ -46,12 +46,10 @@
             </div>
         </div>
     </div>
-
-
-
     @if (config('encore.blog.config.fields.post.partials.translatable.create') && config('encore.blog.config.fields.post.partials.translatable.create') !== [])
         @foreach (config('encore.blog.config.fields.post.partials.translatable.create') as $partial)
             @include($partial)
         @endforeach
     @endif
 </div>
+

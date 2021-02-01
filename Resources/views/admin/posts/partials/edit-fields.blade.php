@@ -18,10 +18,11 @@
         {!! Form::textarea("{$lang}[summary]", old("$lang.summary", $old), ['class' => 'form-control','rows'=>2, 'placeholder' => trans('blog::posts.form.summary')]) !!}
         {!! $errors->first("$lang.summary", '<span class="help-block">:message</span>') !!}
     </div>
-    <?php $old = $post->hasTranslation($lang) ? $post->translate($lang)->description : '' ?>
-    <div class='form-group{{ $errors->has("{$lang}.description") ? ' has-error' : '' }}'>
-        @editor('description', trans('blog::posts.form.description'), old("$lang.description", $old), $lang)
+    <?php $old = $post->hasTranslation($lang) ? $post->translate($lang)->content : '' ?>
+    <div class='form-group{{ $errors->has("{$lang}.content") ? ' has-error' : '' }}'>
+        @editor('content', trans('blog::posts.form.content'), old("$lang.content", $old), $lang)
     </div>
+
 
     <div class="col-xs-12" style="padding-top: 35px;">
         <div class="panel box box-primary">
@@ -41,6 +42,7 @@
                         {!! Form::text("{$lang}[meta_title]", old("{$lang}.meta_title", $old), ['class' => 'form-control', 'data-slug' => 'source', 'placeholder' => trans('blog::posts.form.meta_title')]) !!}
                         {!! $errors->first("{$lang}.meta_title", '<span class="help-block">:message</span>') !!}
                     </div>
+
                     <div class='form-group{{ $errors->has("{$lang}.meta_keywords") ? ' has-error' : '' }}'>
                         {!! Form::label("{$lang}[meta_keywords]", trans('blog::posts.form.meta_keywords')) !!}
                         <?php $old = $post->hasTranslation($lang) ? $post->translate($lang)->meta_keywords : '' ?>
@@ -49,7 +51,7 @@
                     </div>
 
                     <?php $old = $post->hasTranslation($lang) ? $post->translate($lang)->meta_description : '' ?>
-                    @editor('content', trans('blog::posts.form.meta_description'), old("$lang.meta_description",$old), $lang)
+                    @editor('meta_description', trans('blog::posts.form.meta_description'), old("$lang.meta_description",$old), $lang)
                 </div>
             </div>
         </div>
