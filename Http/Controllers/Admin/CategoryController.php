@@ -79,7 +79,7 @@ class CategoryController extends AdminBaseController
     public function edit(Category $category)
     {
         $categories = $this->category->all();
-        return view('blog::admin.categories.edit', compact('category','categories'));
+        return view('blog::admin.categories.edit', compact('category', 'categories'));
     }
 
     /**
@@ -92,10 +92,10 @@ class CategoryController extends AdminBaseController
     public function update(Category $category, UpdateCategoryRequest $request)
     {
         try {
-        $this->category->update($category, $request->all());
+            $this->category->update($category, $request->all());
 
-        return redirect()->route('admin.blog.category.index')
-            ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('blog::categories.title.categories')]));
+            return redirect()->route('admin.blog.category.index')
+                ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('blog::categories.title.categories')]));
         } catch (\Exception $e) {
             \Log::error($e);
             return redirect()->back()
@@ -113,10 +113,10 @@ class CategoryController extends AdminBaseController
     public function destroy(Category $category)
     {
         try {
-        $this->category->destroy($category);
+            $this->category->destroy($category);
 
-        return redirect()->route('admin.blog.category.index')
-            ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('blog::categories.title.categories')]));
+            return redirect()->route('admin.blog.category.index')
+                ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('blog::categories.title.categories')]));
         } catch (\Exception $e) {
             \Log::error($e);
             return redirect()->back()

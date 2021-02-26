@@ -20,4 +20,47 @@ class CachePostDecorator extends BaseCacheDecorator implements PostRepository
             return $this->repository->whereCategory($id);
         });
     }
+
+    public function latest($amount = 5)
+    {
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember(
+                "{$this->locale}.{$this->entityName}.latest.{$amount}",
+                $this->cacheTime,
+                function () use ($amount) {
+                    return $this->repository->latest($amount);
+                }
+            );
+    }
+
+    public function getPreviousOf(object $post)
+    {
+        $postId = $post->id;
+
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember(
+                "{$this->locale}.{$this->entityName}.getPreviousOf.{$postId}",
+                $this->cacheTime,
+                function () use ($post) {
+                    return $this->repository->getPreviousOf($post);
+                }
+            );
+    }
+
+    public function getNextOf(object $post)
+    {
+        $postId = $post->id;
+
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember(
+                "{$this->locale}.{$this->entityName}.getNextOf.{$postId}",
+                $this->cacheTime,
+                function () use ($post) {
+                    return $this->repository->getNextOf($post);
+                }
+            );
+    }
 }

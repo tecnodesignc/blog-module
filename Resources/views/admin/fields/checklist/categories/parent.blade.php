@@ -5,7 +5,6 @@
 
             <label for="categories"><strong>{{trans('blog::posts.table.categories')}}</strong></label>
 
-
             @if(count($categories)>0)
                 @php
                     if(isset($post->categories) && count($post->categories)>0){
@@ -18,7 +17,6 @@
                            $oldCat=old('categories');
                            }
                 @endphp
-
                 <ul class="checkbox" style="list-style: none;padding-left: 5px;">
                     @foreach ($categories as $category)
                         @if($category->parent_id==0)

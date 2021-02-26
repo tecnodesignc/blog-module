@@ -6,7 +6,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i
-                        class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
+                    class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
         <li><a href="{{ route('admin.blog.post.index') }}">{{ trans('blog::posts.title.posts') }}</a></li>
         <li class="active">{{ trans('blog::posts.title.create post') }}</li>
     </ol>
@@ -21,7 +21,7 @@
                     <div class="box box-primary">
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
+                                    class="fa fa-minus"></i>
                             </button>
                         </div>
                         <div class="nav-tabs-custom">
@@ -39,7 +39,7 @@
                         </div> {{-- end nav-tabs-custom --}}
                     </div>
                 </div>
-                @if (config('encore.blog.config.fields.post.partials.normal.create')&&config('encore.blog.config.fields.post.partials.normal.create') !== [])
+                @if (config('encore.blog.config.fields.post.partials.normal.create') && config('encore.blog.config.fields.post.partials.normal.create') !== [])
                     <div class="col-xs-12 ">
                         <div class="box box-primary">
                             <div class="box-header">
@@ -58,7 +58,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -80,7 +80,7 @@
                                         class="btn btn-primary btn-flat">{{ trans('core::core.button.create') }}</button>
                                 <a class="btn btn-danger pull-right btn-flat"
                                    href="{{ route('admin.blog.post.index')}}"><i
-                                            class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
+                                        class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -104,7 +104,8 @@
                         <div class="box-body">
                             <select class="form-control" name="category_id" id="category_id">
                                 @foreach ($categories as $category)
-                                    <option value="{{$category->id}}" {{ old('category_id', 0) == $category->id ? 'selected' : '' }}> {{$category->title}}
+                                    <option
+                                        value="{{$category->id}}" {{ old('category_id', 0) == $category->id ? 'selected' : '' }}> {{$category->title}}
                                     </option>
                                 @endforeach
                             </select><br>
@@ -122,7 +123,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -139,7 +140,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -150,9 +151,10 @@
                             <div class="tab-content">
                                 <div class="form-group">
                                     <div class='input-group date' id='created'>
-                                        <input type='text' name="created_at" id="created_at" class="form-control" value="{{date('Y-m-d H:i:s')}}"/>
+                                        <input type='text' name="created_at" id="created_at" class="form-control"
+                                               value="{{date('Y-m-d H:i:s')}}"/>
                                         <span class="input-group-addon"><span
-                                                    class="glyphicon glyphicon-calendar"></span>
+                                                class="glyphicon glyphicon-calendar"></span>
                     </span>
                                     </div>
                                 </div>
@@ -165,7 +167,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -186,7 +188,7 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool"
                                         data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -209,7 +211,7 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool"
                                         data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <label>{{trans('blog::posts.form.tags')}}</label>
@@ -225,7 +227,7 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool"
                                         data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <label>{{trans('blog::posts.form.editor')}}</label>
@@ -233,7 +235,8 @@
                         <div class="box-body">
                             <select name="user_id" id="user" class="form-control">
                                 @foreach ($users as $user)
-                                    <option value="{{$user->id }}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->present()->fullname()}}
+                                    <option
+                                        value="{{$user->id }}" {{$user->id == old('user_id') ? 'selected' : ''}}>{{$user->present()->fullname()}}
                                         - ({{$user->email}})
                                     </option>
                                 @endforeach
@@ -247,7 +250,7 @@
                             <div class="box-header">
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                                class="fa fa-minus"></i>
+                                            class="fa fa-minus"></i>
                                     </button>
                                 </div>
                                 <div class="form-group">
@@ -280,9 +283,15 @@
 @stop
 
 @push('js-stack')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" integrity="sha256-b5ZKCi55IX+24Jqn638cP/q3Nb2nlx+MH/vMMqrId6k=" crossorigin="anonymous" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+          integrity="sha256-b5ZKCi55IX+24Jqn638cP/q3Nb2nlx+MH/vMMqrId6k=" crossorigin="anonymous"/>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"
+        integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).keypressAction({

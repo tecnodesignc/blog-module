@@ -275,4 +275,38 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
 
     }
 
+    /**
+     * Return the latest x blog posts
+     * @param int $amount
+     * @return object
+     */
+    public function latest($amount = 5)
+    {
+        return $this->model->whereStatus(Status::PUBLISHED)->orderBy('created_at', 'desc')->take($amount)->get();
+
+    }
+
+    /**
+     * Get the previous post of the given post
+     * @param object $post
+     * @return object
+     */
+    public function getPreviousOf(object $post)
+    {
+        return $this->model->where('created_at', '<', $post->created_at)
+            ->whereStatus(Status::PUBLISHED)->orderBy('created_at', 'desc')->first();
+    }
+
+    /**
+     * Get the next post of the given post
+     * @param object $post
+     * @return object
+     */
+    public function getNextOf(object $post)
+    {
+        return $this->model->where('created_at', '>', $post->created_at)
+            ->whereStatus(Status::PUBLISHED)->first();
+    }
+
+
 }

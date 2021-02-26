@@ -6,7 +6,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i
-                        class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
+                    class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
         <li><a href="{{ route('admin.blog.post.index') }}">{{ trans('blog::posts.title.posts') }}</a></li>
         <li class="active">{{ trans('blog::posts.title.edit post') }}</li>
     </ol>
@@ -21,7 +21,7 @@
                     <div class="box box-primary">
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
+                                    class="fa fa-minus"></i>
                             </button>
                         </div>
                         <div class="nav-tabs-custom">
@@ -41,25 +41,25 @@
                 </div>
                 @if (config('encore.blog.config.fields.post.partials.normal.edit') && config('encore.blog.config.fields.post.partials.normal.edit') !== [])
 
-                <div class="col-xs-12 ">
-                    <div class="box box-primary">
-                        <div class="box-header">
-                        </div>
-                        <div class="box-body ">
-                            @foreach (config('encore.blog.config.fields.post.partials.normal.edit') as $partial)
-                            @include($partial)
-                            @endforeach
+                    <div class="col-xs-12 ">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                            </div>
+                            <div class="box-body ">
+                                @foreach (config('encore.blog.config.fields.post.partials.normal.edit') as $partial)
+                                    @include($partial)
+                                @endforeach
 
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
                 <div class="col-xs-12 ">
                     <div class="box box-primary">
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -80,8 +80,8 @@
                                 <button type="submit"
                                         class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
                                 <a class="btn btn-danger pull-right btn-flat"
-                                   href="{{ route('admin.blog.post.index')}}">
-                                    <i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
+                                   href="{{ route('admin.blog.post.index')}}"><i
+                                        class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -105,14 +105,15 @@
                         <div class="box-body">
                             <select class="form-control" name="category_id" id="category_id">
                                 @foreach ($categories as $category)
-                                    <option value="{{$category->id}}" {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}> {{$category->title}}
+                                    <option
+                                        value="{{$category->id}}" {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}> {{$category->title}}
                                     </option>
                                 @endforeach
                             </select><br>
                             <hr/>
                             <div class='form-group{{ $errors->has("template") ? ' has-error' : '' }}'>
                                 {!! Form::label("template", trans('blog::posts.form.template')) !!}
-                                {!! Form::select("template", $all_templates_category, old("template", $category->template), ['class' => "form-control", 'placeholder' => trans('blog::posts.form.template')]) !!}
+                                {!! Form::select("template", $all_templates_post, old("template", $post->template), ['class' => "form-control", 'placeholder' => trans('blog::posts.form.template')]) !!}
                                 {!! $errors->first("template", '<span class="help-block">:message</span>') !!}
                             </div>
                             <hr>
@@ -124,7 +125,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -132,7 +133,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                       @include('blog::admin.fields.checklist.categories.parent')
+                            @include('blog::admin.fields.checklist.categories.parent')
                         </div>
                     </div>
                 </div>
@@ -141,7 +142,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -152,9 +153,10 @@
                             <div class="tab-content">
                                 <div class="form-group">
                                     <div class='input-group date' id='created'>
-                                        <input type='text' name="created_at" id="created_at" class="form-control" value="{{$post->created_at}}"/>
+                                        <input type='text' name="created_at" id="created_at" class="form-control"
+                                               value="{{$post->created_at}}"/>
                                         <span class="input-group-addon"><span
-                                                    class="glyphicon glyphicon-calendar"></span>
+                                                class="glyphicon glyphicon-calendar"></span>
                     </span>
                                     </div>
                                 </div>
@@ -167,7 +169,7 @@
                         <div class="box-header">
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <div class="form-group">
@@ -188,7 +190,7 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool"
                                         data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -211,29 +213,7 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool"
                                         data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                            <label>{{trans('blog::posts.form.editor')}}</label>
-                        </div>
-                        <div class="box-body">
-                            <select name="user_id" id="user" class="form-control">
-                                @foreach ($users as $user)
-                                    <option value="{{$user->id }}" {{$user->id == old('user_id',$post->user_id) ? 'selected' : ''}}>{{$user->present()->fullname()}}
-                                        - ({{$user->email}})
-                                    </option>
-                                @endforeach
-                            </select><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool"
-                                        data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                        class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <label>{{trans('blog::posts.form.tags')}}</label>
@@ -243,13 +223,36 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool"
+                                        data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <label>{{trans('blog::posts.form.editor')}}</label>
+                        </div>
+                        <div class="box-body">
+                            <select name="user_id" id="user" class="form-control">
+                                @foreach ($users as $user)
+                                    <option
+                                        value="{{$user->id }}" {{$user->id == old('user_id',$post->user_id) ? 'selected' : ''}}>{{$user->present()->fullname()}}
+                                        - ({{$user->email}})
+                                    </option>
+                                @endforeach
+                            </select><br>
+                        </div>
+                    </div>
+                </div>
                 @if(config('encore.blog.config.fields.post.secondaryImage'))
                     <div class="col-xs-12 ">
                         <div class="box box-primary">
                             <div class="box-header">
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                                class="fa fa-minus"></i>
+                                            class="fa fa-minus"></i>
                                     </button>
                                 </div>
                                 <div class="form-group">
@@ -283,9 +286,14 @@
 
 @push('js-stack')
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" integrity="sha256-b5ZKCi55IX+24Jqn638cP/q3Nb2nlx+MH/vMMqrId6k=" crossorigin="anonymous" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+          integrity="sha256-b5ZKCi55IX+24Jqn638cP/q3Nb2nlx+MH/vMMqrId6k=" crossorigin="anonymous"/>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"
+        integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).keypressAction({
@@ -300,14 +308,13 @@
             $('input[type="checkbox"], input[type="radio"]').iCheck({
                 checkboxClass: 'icheckbox_flat-blue',
                 radioClass: 'iradio_flat-blue'
+
             });
+
             $('.btn-box-tool').click(function (e) {
                 e.preventDefault();
             });
-
-
         });
-
     </script>
     <style>
 

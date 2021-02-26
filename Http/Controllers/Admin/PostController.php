@@ -59,7 +59,6 @@ class PostController extends AdminBaseController
      */
     public function index(Request $request)
     {
-
         if ($request->input('q')) {
             $param = $request->input('q');
             $posts = $this->post->search($param);
@@ -68,6 +67,7 @@ class PostController extends AdminBaseController
         }
         return view('blog::admin.posts.index', compact('posts'));
     }
+
 
     /**
      * Show the form for creating a new resource.

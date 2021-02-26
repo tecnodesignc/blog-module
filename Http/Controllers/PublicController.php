@@ -5,13 +5,11 @@ namespace Modules\Iblog\Http\Controllers;
 use Log;
 use Mockery\CountValidator\Exception;
 use Modules\Core\Http\Controllers\BasePublicController;
-use Modules\Iblog\Repositories\CategoryRepository;
-use Modules\Iblog\Repositories\PostRepository;
-use Modules\Ifeeds\Support\SupportFeed;
+use Modules\Blog\Repositories\CategoryRepository;
+use Modules\Blog\Repositories\PostRepository;
 use Modules\Tag\Repositories\TagRepository;
 use Request;
 use Route;
-use Modules\Page\Http\Controllers\PublicController as PageController;
 
 class PublicController extends BasePublicController
 {
@@ -33,12 +31,12 @@ class PublicController extends BasePublicController
     public function index()
     {
         $slug = Request::path();
-
+        $uris=explode('/',$slug);
+        if (count($uris)>1)$slug=$uris[1];
         $category = $this->category->findBySlug($slug);
         $posts = $this->post->whereCategory($category->id);
         //Get Custom Template.
         $template = $this->getTemplateForCategory($category);
-
         return view($template, compact('posts', 'category'));
 
     }
@@ -93,7 +91,7 @@ class PublicController extends BasePublicController
      */
     private function getTemplateForPost($post)
     {
-        return (view()->exists($post->template)) ? $post->template : 'default';
+        return (view()->exists('blog.post.'.$post->template)) ? 'blog.post.'.$post->template : 'blog.post.default';
     }
 
     /**
@@ -104,7 +102,7 @@ class PublicController extends BasePublicController
      */
     private function getTemplateForCategory($category)
     {
-        return (view()->exists($category->template)) ? $category->template : 'default';
+        return (view()->exists('blog.category.'.$category->template)) ? 'blog.category.'.$category->template : 'blog.category.default';
     }
 
 }

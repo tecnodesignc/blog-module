@@ -13,7 +13,7 @@ use Modules\Media\Entities\File;
 
 class Post extends Model
 {
-    use Translatable, MediaRelation, PresentableTrait, NamespacedEntity, TaggableTrait, MediaRelation;
+    use Translatable, MediaRelation, PresentableTrait, NamespacedEntity, TaggableTrait;
 
     protected $table = 'blog__posts';
     protected static string $entityNamespace = 'encorecms/post';
@@ -81,7 +81,10 @@ class Post extends Model
 
         return $this->belongsTo("Modules\\User\\Entities\\{$driver}\\User");
     }
-
+    public function comments()
+    {
+        return $this->morphMany("Modules\\Comments\\Entities\\Comment", 'commentable');
+    }
     /**
      * |--------------------------------------------------------------------------
      * | MUTATORS
@@ -102,7 +105,7 @@ class Post extends Model
         if (!$thumbnail) {
             $image = [
                 'mimeType' => 'image/jpeg',
-                'path' => url('modules/blog/img/post/default.jpg')
+                'path' => null
             ];
         } else {
             $image = [
@@ -154,7 +157,7 @@ class Post extends Model
     public function getUrlAttribute()
     {
 
-        return \URL::route(\LaravelLocalization::getCurrentLocale() . '.blog.' . $this->category->slug . '.post', [$this->slug]);
+        return \URL::route(\LaravelLocalization::getCurrentLocale() . '.blog.' . $this->category->slug . '.post', [$this->slug??'']);
 
     }
 

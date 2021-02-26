@@ -7,7 +7,18 @@ versions:
         added:
           - Sluggable Trait in entities traslates
           - Requests validation in create and update
+          - Sluggable to CategoryTranslation and PostTranslation entities
+          - view admin data for category and post
+          - Request messages
+          - Funcitons repositories for latest and next
         change:
           - Helpres route PostRepository
           - Route view composer.php
           - Namespace PostTemplateApiControler
+          - Description by content in fieds edit of posts
+          - Title translate in menu sidebar
+          - Route name  in post an category api controller
+          - View admin and frontend
+        deleted:
+          - Duplicate use of MediaRelation in Post entity
+

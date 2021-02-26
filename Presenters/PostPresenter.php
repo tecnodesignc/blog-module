@@ -37,7 +37,7 @@ class PostPresenter extends Presenter
      * Get the next post of the current post
      * @return object
      */
-    public function next(): object
+    public function next()
     {
         return $this->post->getNextOf($this->entity);
     }

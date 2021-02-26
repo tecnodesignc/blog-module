@@ -7,6 +7,7 @@ use Modules\Blog\Events\CategoryWasDeleted;
 use Modules\Blog\Events\CategoryWasUpdated;
 use Modules\Blog\Repositories\CategoryRepository;
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
+use Illuminate\Database\Eloquent\Builder;
 
 class EloquentCategoryRepository extends EloquentBaseRepository implements CategoryRepository
 {

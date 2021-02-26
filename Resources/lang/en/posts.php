@@ -29,9 +29,13 @@ return [
         'posts' => 'Post',
         'create post' => 'Create a post',
         'edit post' => 'Edit a post',
+        'recent post'=>'Recent Post',
+        'related posts'=>'Related Posts',
     ],
     'button' => [
         'create post' => 'Create a post',
+        'next'=>'Next',
+        'previous'=>'Previous',
     ],
     'table' => [
         'id' => 'id',

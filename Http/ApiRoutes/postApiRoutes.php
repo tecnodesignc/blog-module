@@ -14,14 +14,14 @@ $router->group(['prefix' => 'posts'], function (Router $router) {
 
     //Route index
     $router->get('/', [
-        'as' => 'api.blog.post.get.items.by',
+        'as' => 'api.blog.post.index',
         'uses' => 'PostApiController@index',
         //'middleware' => ['auth:api']
     ]);
 
     //Route show
     $router->get('/{criteria}', [
-        'as' => 'api.blog.post.get.item',
+        'as' => 'api.blog.post.show',
         'uses' => 'PostApiController@show',
         //'middleware' => ['auth:api']
     ]);

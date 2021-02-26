@@ -31,9 +31,13 @@ return [
         'posts' => 'Artículo',
         'create post' => 'Crear a artículo',
         'edit post' => 'Editar a artículo',
+        'recent post'=>'Artículos Recientes',
+        'related posts'=>'Artículos Relacionados',
     ],
     'button' => [
-        'create post' => 'Create a post',
+        'create post' => 'Crear a Artículo',
+        'next'=>'Sigiente',
+        'previous'=>'Anterior',
     ],
     'table' => [
         'id' => 'id',
