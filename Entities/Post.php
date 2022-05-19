@@ -52,7 +52,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected array $casts = [
+    protected $casts = [
         'options' => 'array'
     ];
 
