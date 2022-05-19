@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Iblog\Http\Controllers;
+namespace Modules\Blog\Http\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
