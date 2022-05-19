@@ -8,64 +8,47 @@ use Log;
 use Mockery\CountValidator\Exception;
 use Modules\Blog\Http\Requests\CreateCategoryRequest;
 use Modules\Blog\Repositories\CategoryRepository;
-use Modules\Blog\Repositories\PostRepository;
 use Modules\Blog\Transformers\CategoryTransformer;
 use Modules\Core\Http\Controllers\Api\BaseApiController;
-use Modules\User\Transformers\UserProfileTransformer;
 use Route;
-
-//Base API
 
 class CategoryApiController extends BaseApiController
 {
-
-    private PostRepository $post;
     /**
      *
      * @var CategoryRepository
      */
     private CategoryRepository $category;
 
-    public function __construct(PostRepository $post, CategoryRepository $category)
+    public function __construct(CategoryRepository $category)
     {
         parent::__construct();
-        $this->post = $post;
         $this->category = $category;
     }
 
     /**
-     * Get Data from Categories
+     * Get listing of the resource
      *
      * @param Request $request
      * @return JsonResponse
      */
-
     public function index(Request $request): JsonResponse
     {
         try {
-
-            //Get Parameters from URL.
             $params = $this->getParamsRequest($request);
-            //Request to Repository
             $categories = $this->category->getItemsBy($params);
-
-            //Response
             $response = ["data" => CategoryTransformer::collection($categories)];
-
-            //If request pagination add meta-page
             $params->page ? $response["meta"] = ["page" => $this->pageTransformer($categories)] : false;
         } catch (\Exception $e) {
             Log::Error($e);
             $status = $this->getStatusError($e->getCode());
             $response = ["errors" => $e->getMessage()];
         }
-
-        //Return response
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
     /**
-     * GET A ITEM
+     * Get a resource item
      *
      * @param $criteria
      * @param Request $request
@@ -74,30 +57,20 @@ class CategoryApiController extends BaseApiController
       public function show($criteria,Request $request): JsonResponse
       {
         try {
-          //Get Parameters from URL.
           $params = $this->getParamsRequest($request);
-
-          //Request to Repository
           $category = $this->category->getItem($criteria, $params);
-
-          //Break if no found item
-          if(!$category) throw new Exception('Item not found',404);
-
-          //Response
+          if(!$category) throw new Exception( trans('core::core.exceptions.item no found', ['item' => trans('blog::categories.title.categories')]),404);
           $response = ["data" => new CategoryTransformer($category)];
-
         } catch (\Exception $e) {
           $status = $this->getStatusError($e->getCode());
           $response = ["errors" => $e->getMessage()];
         }
-
-        //Return response
         return response()->json($response, $status ?? 200);
       }
 
 
     /**
-     * Create a Category
+     * Store a newly created resource in storage.
      *
      * @param Request $request
      * @return JsonResponse
@@ -106,28 +79,22 @@ class CategoryApiController extends BaseApiController
     {
         \DB::beginTransaction();
         try {
-            $data = $request->input('attributes') ?? [];//Get data
-            //Validate Request
+            $data = $request->input('attributes') ?? [];
             $this->validateRequestApi(new CreateCategoryRequest($data));
-
-            //Create item
-            $category = $this->category->create($data);
-
-            //Response
-            $response = ["data" => new CategoryTransformer($category)];
-            \DB::commit(); //Commit to Data Base
+            $this->category->create($data);
+            $response = ["message" => trans('core::core.messages.resource created', ['name' => trans('blog::categories.title.categories')])];
+            \DB::commit();
         } catch (\Exception $e) {
-            \DB::rollback();//Rollback to Data Base
+            \DB::rollback();
             Log::Error($e);
             $status = $this->getStatusError($e->getCode());
             $response = ["errors" => $e->getMessage()];
         }
-        //Return response
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
     /**
-     * Update a Category
+     * Update the specified resource in storage..
      *
      * @param $criteria
      * @param Request $request
@@ -135,68 +102,48 @@ class CategoryApiController extends BaseApiController
      */
     public function update($criteria, Request $request): JsonResponse
     {
-        \DB::beginTransaction(); //DB Transaction
+        \DB::beginTransaction();
         try {
-            //Get data
             $data = $request->input('attributes') ?? [];//Get data
-
-            //Validate Request
             $this->validateRequestApi(new CreateCategoryRequest($data));
-
-            //Get Parameters from URL.
             $params = $this->getParamsRequest($request);
-
-
-            //Request to Repository
             $category = $this->category->getItem($criteria, $params);
-
-            //Request to Repository
+            if(!$category) throw new Exception(trans('core::core.exceptions.item no found', ['item' => trans('blog::categories.title.categories')]),404);
             $this->category->update($category, $data);
-
-            //Response
-            $response = ["data" => trans('blog::common.messages.resource updated')];
-            \DB::commit();//Commit to DataBase
+            $response = ["message" => trans('core::core.messages.resource updated', ['name' => trans('blog::categories.title.categories')])];
+            \DB::commit();
         } catch (\Exception $e) {
-            \DB::rollback();//Rollback to Data Base
+            \DB::rollback();
             Log::Error($e);
             $status = $this->getStatusError($e->getCode());
             $response = ["errors" => $e->getMessage()];
         }
-
-        //Return response
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
     /**
-     * Delete a Category
+     * Remove the specified resource from storage.
      *
      * @param $criteria
      * @param Request $request
      * @return JsonResponse
      */
-    public function delete($criteria, Request $request)
+    public function delete($criteria, Request $request): JsonResponse
     {
         \DB::beginTransaction();
         try {
-            //Get params
             $params = $this->getParamsRequest($request);
-
-            //Request to Repository
             $category = $this->category->getItem($criteria, $params);
-            //call Method delete
+            if(!$category) throw new Exception(trans('core::core.exceptions.item no found', ['item' => trans('blog::categories.title.categories')]),404);
             $this->category->destroy($category);
-
-            //Response
-            $response = ["data" => trans('blog::common.messages.resource deleted')];
-            \DB::commit();//Commit to Data Base
+            $response = ["message" => trans('core::core.messages.resource deleted', ['name' => trans('blog::categories.title.categories')])];
+            \DB::commit();
         } catch (\Exception $e) {
-            \DB::rollback();//Rollback to Data Base
+            \DB::rollback();
             Log::Error($e);
             $status = $this->getStatusError($e->getCode());
             $response = ["errors" => $e->getMessage()];
         }
-
-        //Return response
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 

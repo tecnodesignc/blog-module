@@ -9,7 +9,7 @@ use Mockery\CountValidator\Exception;
 use Modules\Blog\Http\Requests\CreatePostRequest;
 use Modules\Blog\Repositories\PostRepository;
 use Modules\Blog\Transformers\PostTransformer;
-use Modules\Ihelpers\Http\Controllers\Api\BaseApiController;
+use Modules\Core\Http\Controllers\Api\BaseApiController;
 use Modules\User\Transformers\UserProfileTransformer;
 use Route;
 
@@ -27,67 +27,49 @@ class PostApiController extends BaseApiController
     }
 
     /**
-     * GET ITEMS
+     * Get listing of the resource
      *
+     * @param Request $request
      * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
         try {
-            //Get Parameters from URL.
             $params = $this->getParamsRequest($request);
-
-            //Request to Repository
             $posts = $this->post->getItemsBy($params);
-
-            //Response
             $response = ["data" => PostTransformer::collection($posts)];
-
-            //If request pagination add meta-page
             $params->page ? $response["meta"] = ["page" => $this->pageTransformer($posts)] : false;
         } catch (\Exception $e) {
             Log::Error($e);
             $status = $this->getStatusError($e->getCode());
             $response = ["errors" => $e->getMessage()];
         }
-
-        //Return response
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
     /**
-     * GET A ITEM
+     * Get a resource item
      *
      * @param $criteria
      * @param Request $request
      * @return JsonResponse
      */
-    public function show($criteria,Request $request): JsonResponse
+    public function show($criteria, Request $request): JsonResponse
     {
-      try {
-        //Get Parameters from URL.
-        $params = $this->getParamsRequest($request);
-
-        //Request to Repository
-        $post = $this->post->getItem($criteria, $params);
-
-        //Break if no found item
-        if(!$post) throw new Exception('Item not found',404);
-
-        //Response
-        $response = ["data" => new PostTransformer($post)];
-
-      } catch (\Exception $e) {
-        $status = $this->getStatusError($e->getCode());
-        $response = ["errors" => $e->getMessage()];
-      }
-
-      //Return response
-      return response()->json($response, $status ?? 200);
+        try {
+            $params = $this->getParamsRequest($request);
+            $post = $this->post->getItem($criteria, $params);
+            if (!$post) throw new Exception(trans('core::core.exceptions.item no found', ['item' => trans('blog::posts.title.posts')]), 404);
+            $response = ["data" => new PostTransformer($post)];
+        } catch (\Exception $e) {
+            $status = $this->getStatusError($e->getCode());
+            $response = ["errors" => $e->getMessage()];
+        }
+        return response()->json($response, $status ?? 200);
     }
 
     /**
-     * CREATE A ITEM
+     * Store a newly created resource in storage.
      *
      * @param Request $request
      * @return JsonResponse
@@ -97,27 +79,21 @@ class PostApiController extends BaseApiController
         \DB::beginTransaction();
         try {
             $data = $request->input('attributes') ?? [];//Get data
-            //Validate Request
             $this->validateRequestApi(new CreatePostRequest($data));
-
-            //Create item
-            $post = $this->post->create($data);
-
-            //Response
-            $response = ["data" => new PostTransformer($post)];
-            \DB::commit(); //Commit to Data Base
+            $this->post->create($data);
+            $response = ["message" => trans('core::core.messages.resource created', ['name' => trans('blog::posts.title.posts')])];
+            \DB::commit();
         } catch (\Exception $e) {
             Log::Error($e);
-            \DB::rollback();//Rollback to Data Base
+            \DB::rollback();
             $status = $this->getStatusError($e->getCode());
             $response = ["errors" => $e->getMessage()];
         }
-        //Return response
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
     /**
-     * UPDATE ITEM
+     * Update the specified resource in storage..
      *
      * @param $criteria
      * @param Request $request
@@ -125,37 +101,27 @@ class PostApiController extends BaseApiController
      */
     public function update($criteria, Request $request): JsonResponse
     {
-        \DB::beginTransaction(); //DB Transaction
+        \DB::beginTransaction();
         try {
-            //Get data
             $data = $request->input('attributes') ?? [];//Get data
-
-            //Validate Request
             $this->validateRequestApi(new CreatePostRequest($data));
-
-            //Get Parameters from URL.
             $params = $this->getParamsRequest($request);
-            //Request to Repository
             $post = $this->post->getItem($criteria, $params);
-            //Request to Repository
+            if (!$post) throw new Exception(trans('core::core.exceptions.item no found', ['item' => trans('blog::posts.title.posts')]), 404);
             $this->post->update($post, $data);
-
-            //Response
-            $response = ["data" => trans('blog::common.messages.resource updated')];
-            \DB::commit();//Commit to DataBase
+            $response = ["message" => trans('core::core.messages.resource updated', ['name' => trans('blog::posts.title.posts')])];
+            \DB::commit();
         } catch (\Exception $e) {
             Log::Error($e);
-            \DB::rollback();//Rollback to Data Base
+            \DB::rollback();
             $status = $this->getStatusError($e->getCode());
             $response = ["errors" => $e->getMessage()];
         }
-
-        //Return response
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
     /**
-     * DELETE A ITEM
+     * Remove the specified resource from storage.
      *
      * @param $criteria
      * @param Request $request
@@ -165,26 +131,18 @@ class PostApiController extends BaseApiController
     {
         \DB::beginTransaction();
         try {
-            //Get params
             $params = $this->getParamsRequest($request);
-
-            //Request to Repository
             $post = $this->post->getItem($criteria, $params);
-
-            //call Method delete
+            if (!$post) throw new Exception(trans('core::core.exceptions.item no found', ['item' => trans('blog::posts.title.posts')]), 404);
             $this->post->destroy($post);
-
-            //Response
-            $response = ["data" => trans('blog::common.messages.resource deleted')];
-            \DB::commit();//Commit to Data Base
+            $response = ["message" => trans('core::core.messages.resource deleted', ['name' => trans('blog::posts.title.posts')])];
+            \DB::commit();
         } catch (\Exception $e) {
             Log::Error($e);
-            \DB::rollback();//Rollback to Data Base
+            \DB::rollback();
             $status = $this->getStatusError($e->getCode());
             $response = ["errors" => $e->getMessage()];
         }
-
-        //Return response
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
