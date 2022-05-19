@@ -51,6 +51,7 @@ return [
         'title' => 'Title',
         'slug' => 'Slug',
         'description' => 'Description',
+        'content'=>'Content',
         'categories' => 'Categories',
         'secondary image' => 'Secondary image',
         'image' => 'Main Image',

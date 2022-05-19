@@ -31,20 +31,21 @@ return [
         'posts' => 'Artículo',
         'create post' => 'Crear a artículo',
         'edit post' => 'Editar a artículo',
-        'recent post'=>'Artículos Recientes',
-        'related posts'=>'Artículos Relacionados',
+        'recent post' => 'Artículos Recientes',
+        'related posts' => 'Artículos Relacionados',
     ],
     'button' => [
         'create post' => 'Crear a Artículo',
-        'next'=>'Sigiente',
-        'previous'=>'Anterior',
+        'next' => 'Sigiente',
+        'previous' => 'Anterior',
     ],
     'table' => [
         'id' => 'id',
         'title' => 'Titulo',
         'slug' => 'Url Amigable',
         'categories' => 'Categorias',
-        'principal category' => 'Categoria Principal'
+        'principal category' => 'Categoria Principal',
+
     ],
     'form' => [
         'gallery' => 'Galeria',
@@ -53,6 +54,7 @@ return [
         'title' => 'Titulo',
         'slug' => 'Url Amigable',
         'description' => 'Descripción',
+        'content' => 'Contenido',
         'categories' => 'Categorias',
         'secondary image' => 'Imagen  Segundaria',
         'image' => 'Imagen Principal',
