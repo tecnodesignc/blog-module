@@ -4,6 +4,9 @@ namespace Modules\Blog\Entities;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Laracasts\Presenter\PresentableTrait;
 use Modules\Blog\Presenters\PostPresenter;
 use Modules\Core\Traits\NamespacedEntity;
@@ -39,14 +42,17 @@ class Post extends Model
         'created_at'
     ];
 
-    protected $presenter = PostPresenter::class;
+    /**
+     * @var string
+     */
+    protected string $presenter = PostPresenter::class;
 
     /**
      * The attributes that should be casted to native types.
      *
      * @var array
      */
-    protected $casts = [
+    protected array $casts = [
         'options' => 'array'
     ];
 
@@ -65,32 +71,49 @@ class Post extends Model
      * |--------------------------------------------------------------------------
      */
 
-    public function categories()
+    public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'blog__post_category');
     }
 
-    public function category()
+    /**
+     * @return BelongsTo
+     */
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function user()
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         $driver = config('encore.user.config.driver');
 
         return $this->belongsTo("Modules\\User\\Entities\\{$driver}\\User");
     }
-    public function comments()
+
+    /**
+     * @return MorphMany
+     */
+    public function comments(): MorphMany
     {
         return $this->morphMany("Modules\\Comments\\Entities\\Comment", 'commentable');
     }
+
     /**
      * |--------------------------------------------------------------------------
      * | MUTATORS
      * |--------------------------------------------------------------------------
      */
-    public function getOptionsAttribute($value)
+
+
+     /**
+     * @param $value
+     * @return mixed
+     */
+    public function getOptionsAttribute($value): mixed
     {
         try {
             return json_decode(json_decode($value));
@@ -99,7 +122,10 @@ class Post extends Model
         }
     }
 
-    public function getSecondaryImageAttribute()
+    /**
+     * @return mixed
+     */
+    public function getSecondaryImageAttribute(): mixed
     {
         $thumbnail = $this->files()->where('zone', 'secondaryimage')->first();
         if (!$thumbnail) {
@@ -116,7 +142,10 @@ class Post extends Model
         return json_decode(json_encode($image));
     }
 
-    public function getMainImageAttribute()
+    /**
+     * @return mixed
+     */
+    public function getMainImageAttribute(): mixed
     {
         $thumbnail = $this->files()->where('zone', 'mainimage')->first();
         if (!$thumbnail) {
@@ -134,17 +163,20 @@ class Post extends Model
 
     }
 
-    public function getGalleryAttribute()
+    /**
+     * @return mixed
+     */
+    public function getGalleryAttribute(): mixed
     {
 
 
         $gallery = $this->filesByZone('gallery')->get();
         $response = [];
         foreach ($gallery as $img) {
-            array_push($response, [
+            $response[] = [
                 'mimeType' => $img->mimetype,
                 'path' => $img->path_string
-            ]);
+            ];
         }
 
         return json_decode(json_encode($response));
@@ -154,7 +186,7 @@ class Post extends Model
      * URL post
      * @return string
      */
-    public function getUrlAttribute()
+    public function getUrlAttribute(): string
     {
 
         return \URL::route(\LaravelLocalization::getCurrentLocale() . '.blog.' . $this->category->slug . '.post', [$this->slug??'']);

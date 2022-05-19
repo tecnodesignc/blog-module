@@ -11,7 +11,7 @@ class PostIsUpdating extends AbstractEntityHook implements EntityIsChanging
     /**
      * @var Post
      */
-    private $post;
+    private Post $post;
 
     public function __construct(Post $post, array $data)
     {
@@ -23,7 +23,7 @@ class PostIsUpdating extends AbstractEntityHook implements EntityIsChanging
     /**
      * @return Post
      */
-    public function getPost()
+    public function getPost(): Post
     {
         return $this->post;
     }

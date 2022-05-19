@@ -2,6 +2,11 @@
 
 namespace Modules\Blog\Repositories\Cache;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Modules\Blog\Entities\Post;
 use Modules\Blog\Repositories\PostRepository;
 use Modules\Core\Repositories\Cache\BaseCacheDecorator;
 
@@ -14,14 +19,19 @@ class CachePostDecorator extends BaseCacheDecorator implements PostRepository
         $this->repository = $post;
     }
 
-    public function WhereCategory(int $id): object
+    /**
+     * Get the next post of the given post
+     * @param integer $id
+     * @return LengthAwarePaginator
+     */
+    public function WhereCategory(int $id): LengthAwarePaginator
     {
         return $this->remember(function () use ($id) {
             return $this->repository->whereCategory($id);
         });
     }
 
-    public function latest($amount = 5)
+    public function latest(int $amount = 5): Collection
     {
         return $this->cache
             ->tags([$this->entityName, 'global'])
@@ -34,7 +44,7 @@ class CachePostDecorator extends BaseCacheDecorator implements PostRepository
             );
     }
 
-    public function getPreviousOf(object $post)
+    public function getPreviousOf(Post $post): Model|Collection|Builder|array|null
     {
         $postId = $post->id;
 
@@ -49,7 +59,12 @@ class CachePostDecorator extends BaseCacheDecorator implements PostRepository
             );
     }
 
-    public function getNextOf(object $post)
+    /**
+     * Get the next post of the given post
+     * @param Post $post
+     * @return Model|Collection|Builder|array|null
+     */
+    public function getNextOf(Post $post):Model|Collection|Builder|array|null
     {
         $postId = $post->id;
 

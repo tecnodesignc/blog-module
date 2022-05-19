@@ -2,8 +2,13 @@
 
 namespace Modules\Blog\Http\Controllers\Admin;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Modules\Blog\Entities\Post;
 use Modules\Blog\Entities\Status;
 use Modules\Blog\Http\Requests\CreatePostRequest;
@@ -19,26 +24,26 @@ class PostController extends AdminBaseController
     /**
      * @var PostRepository
      */
-    private $post;
+    private PostRepository $post;
 
     /**
      * @var CategoryRepository
      */
-    private $category;
+    private CategoryRepository $category;
 
     /**
      * @var Status
      */
-    private $status;
+    private Status $status;
     /**
      * @var RoleRepository
      */
-    private $role;
+    private RoleRepository $role;
 
     /**
      * @var UserRepository
      */
-    private $user;
+    private UserRepository $user;
 
     public function __construct(PostRepository $post, CategoryRepository $category, Status $status, RoleRepository $role, UserRepository $user)
     {
@@ -55,9 +60,9 @@ class PostController extends AdminBaseController
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|Response
+     * @return Application|Factory|View|Response
      */
-    public function index(Request $request)
+    public function index(Request $request): View|Factory|Response|Application
     {
         if ($request->input('q')) {
             $param = $request->input('q');
@@ -72,9 +77,9 @@ class PostController extends AdminBaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): View|Factory|Application
     {
         $users = $this->user->all();
         $status = $this->status->lists();
@@ -86,9 +91,9 @@ class PostController extends AdminBaseController
      * Store a newly created resource in storage.
      *
      * @param CreatePostRequest $request
-     * @return Response
+     * @return Redirector|RedirectResponse
      */
-    public function store(CreatePostRequest $request)
+    public function store(CreatePostRequest $request): Redirector|RedirectResponse
     {
         \DB::beginTransaction();
         try {
@@ -111,9 +116,9 @@ class PostController extends AdminBaseController
      * Show the form for editing the specified resource.
      *
      * @param Post $post
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|Response
+     * @return Application|Factory|View|Response
      */
-    public function edit(Post $post)
+    public function edit(Post $post): View|Factory|Response|Application
     {
         $users = $this->user->all();
         $status = $this->status->lists();
@@ -126,9 +131,9 @@ class PostController extends AdminBaseController
      *
      * @param Post $post
      * @param UpdatePostRequest $request
-     * @return Response
+     * @return Redirector|RedirectResponse
      */
-    public function update(Post $post, UpdatePostRequest $request)
+    public function update(Post $post, UpdatePostRequest $request): Redirector|RedirectResponse
     {
         \DB::beginTransaction();
         try {
@@ -150,9 +155,9 @@ class PostController extends AdminBaseController
      * Remove the specified resource from storage.
      *
      * @param Post $post
-     * @return Response
+     * @return Redirector|RedirectResponse
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): Redirector|RedirectResponse
     {
         try {
             $this->post->destroy($post);

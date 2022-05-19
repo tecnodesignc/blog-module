@@ -2,6 +2,7 @@
 
 namespace Modules\Blog\Events;
 
+use Illuminate\Database\Eloquent\Model;
 use Modules\Blog\Entities\Post;
 use Modules\Media\Contracts\StoringMedia;
 
@@ -10,12 +11,16 @@ class PostWasCreated implements StoringMedia
     /**
      * @var array
      */
-    public $data;
+    public array $data;
     /**
      * @var Post
      */
-    public $post;
+    public Post $post;
 
+    /**
+     * @param $post
+     * @param array $data
+     */
     public function __construct($post, array $data)
     {
         $this->data = $data;
@@ -24,9 +29,9 @@ class PostWasCreated implements StoringMedia
 
     /**
      * Return the entity
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
-    public function getEntity()
+    public function getEntity(): Model
     {
         return $this->post;
     }
@@ -35,7 +40,7 @@ class PostWasCreated implements StoringMedia
      * Return the ALL data sent
      * @return array
      */
-    public function getSubmissionData()
+    public function getSubmissionData(): array
     {
         return $this->data;
     }

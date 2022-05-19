@@ -3,6 +3,7 @@
 namespace Modules\Blog\Transformers;
 
 use Illuminate\Http\Resources\Json\Resource;
+use Modules\Media\Image\ThumbnailManager;
 use Modules\User\Transformers\UserProfileTransformer;
 use Modules\Media\Image\Imagy;
 
@@ -11,11 +12,11 @@ class CategoryTransformer extends Resource
    /**
     * @var Imagy
     */
-   private $imagy;
+   private Imagy $imagy;
    /**
     * @var ThumbnailManager
     */
-   private $thumbnailManager;
+   private ThumbnailManager $thumbnailManager;
 
    public function __construct($resource)
    {
@@ -24,7 +25,7 @@ class CategoryTransformer extends Resource
       $this->imagy = app(Imagy::class);
    }
 
-   public function toArray($request)
+   public function toArray($request): array
    {
       $data = [
          'id' => $this->when($this->id, $this->id),

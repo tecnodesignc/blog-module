@@ -1,8 +1,8 @@
 url: https://github.com/tecnodesignc/blog-module
 versions:
-    "1.0.0":
-        added:
-          - Initial Version
+    "2.0.0":
+      changed:
+        - Laravel 9 compatibility
     "1.0.1":
         added:
           - Sluggable Trait in entities traslates
@@ -21,4 +21,7 @@ versions:
           - View admin and frontend
         deleted:
           - Duplicate use of MediaRelation in Post entity
+    "1.0.0":
+      added:
+        - Initial Version
 

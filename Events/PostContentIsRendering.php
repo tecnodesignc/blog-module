@@ -2,13 +2,19 @@
 
 namespace Modules\Blog\Events;
 
+/**
+ *
+ */
 class PostContentIsRendering
 {
     /**
      * @var string The body of the page to render
      */
-    private $content;
-    private $original;
+    private string $content;
+    /**
+     * @var mixed
+     */
+    private mixed $original;
 
     public function __construct($content)
     {
@@ -19,7 +25,7 @@ class PostContentIsRendering
     /**
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -27,7 +33,7 @@ class PostContentIsRendering
     /**
      * @param string $content
      */
-    public function setContent($content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
@@ -35,11 +41,14 @@ class PostContentIsRendering
     /**
      * @return mixed
      */
-    public function getOriginal()
+    public function getOriginal(): mixed
     {
         return $this->original;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getContent();

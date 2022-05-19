@@ -2,6 +2,9 @@
 
 namespace Modules\Iblog\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Log;
 use Mockery\CountValidator\Exception;
 use Modules\Core\Http\Controllers\BasePublicController;
@@ -16,9 +19,15 @@ class PublicController extends BasePublicController
     /**
      * @var PostRepository
      */
-    private $post;
-    private $category;
-    private $tag;
+    private PostRepository $post;
+    /**
+     * @var CategoryRepository
+     */
+    private CategoryRepository $category;
+    /**
+     * @var TagRepository
+     */
+    private TagRepository $tag;
 
     public function __construct(PostRepository $post, CategoryRepository $category, TagRepository $tag)
     {
@@ -28,7 +37,10 @@ class PublicController extends BasePublicController
         $this->tag = $tag;
     }
 
-    public function index()
+    /**
+     * @return Factory|View|Application
+     */
+    public function index(): Factory|View|Application
     {
         $slug = Request::path();
         $uris=explode('/',$slug);
@@ -41,7 +53,11 @@ class PublicController extends BasePublicController
 
     }
 
-    public function show($slug)
+    /**
+     * @param $slug
+     * @return Factory|View|Application
+     */
+    public function show($slug): Factory|View|Application
     {
         $post = $this->post->findBySlug($slug);
         $category = $post->category;
@@ -54,18 +70,22 @@ class PublicController extends BasePublicController
 
     }
 
-    public function tag($slug)
+    /**
+     * @param $slug
+     * @return Factory|View|Application
+     */
+    public function tag($slug): Factory|View|Application
     {
 
         //Default Template
-        $tpl = 'iblog::frontend.tag';
-        $ttpl = 'iblog.tag';
+        $tpl = 'blog::frontend.tag';
+        $ttpl = 'blog.tag';
         $tag = $this->tag->findBySlug($slug);
         if (view()->exists($ttpl)) $tpl = $ttpl;
 
         $posts = $this->post->whereTag($slug);
         //Get Custom Template.
-        $ctpl = "iblog.tag.{$tag->id}";
+        $ctpl = "blog.tag.{$tag->id}";
         if (view()->exists($ctpl)) $tpl = $ctpl;
 
 
@@ -73,7 +93,11 @@ class PublicController extends BasePublicController
 
     }
 
-    public function feed($format)
+    /**
+     * @param $format
+     * @return mixed
+     */
+    public function feed($format): mixed
     {
         $postPerFeed = config('asgard.iblog.config.postPerFeed');
         $posts = $this->post->whereFilters((object)['status' => 'publicado', 'take' => $postPerFeed]);
@@ -89,7 +113,7 @@ class PublicController extends BasePublicController
      * @param $post
      * @return string
      */
-    private function getTemplateForPost($post)
+    private function getTemplateForPost($post): string
     {
         return (view()->exists('blog.post.'.$post->template)) ? 'blog.post.'.$post->template : 'blog.post.default';
     }
@@ -97,10 +121,10 @@ class PublicController extends BasePublicController
     /**
      * Return the template for the given page
      * or the default template if none found
-     * @param $page
+     * @param $category
      * @return string
      */
-    private function getTemplateForCategory($category)
+    private function getTemplateForCategory($category): string
     {
         return (view()->exists('blog.category.'.$category->template)) ? 'blog.category.'.$category->template : 'blog.category.default';
     }

@@ -2,22 +2,25 @@
 
 namespace Modules\Page\Http\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Collection;
 use Modules\Page\Services\FinderService;
 use Modules\Workshop\Manager\ThemeManager;
+use Tecnodesignc\Stylist\Theme\Exceptions\ThemeNotFoundException;
 
 class PostTemplatesController extends Controller
 {
     /**
      * @var ThemeManager
      */
-    private $themeManager;
+    private ThemeManager $themeManager;
 
     /**
      * @var FinderService
      */
-    private $finder;
+    private FinderService $finder;
 
     public function __construct(ThemeManager $themeManager, FinderService $finder)
     {
@@ -25,12 +28,15 @@ class PostTemplatesController extends Controller
         $this->finder = $finder;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         return response()->json($this->getTemplates());
     }
 
-    private function getTemplates()
+    /**
+     * @return Collection
+     */
+    private function getTemplates(): Collection
     {
         $path = $this->getCurrentThemeBasePath();
 
@@ -56,8 +62,9 @@ class PostTemplatesController extends Controller
      * Get the base path of the current theme.
      *
      * @return string
+     * @throws ThemeNotFoundException
      */
-    private function getCurrentThemeBasePath()
+    private function getCurrentThemeBasePath(): string
     {
         return $this->themeManager->find(setting('core::template'))->getPath();
     }
@@ -69,7 +76,7 @@ class PostTemplatesController extends Controller
      *
      * @return string
      */
-    private function getTemplateName($template)
+    private function getTemplateName($template): string
     {
         preg_match("/{{-- Template: (.*) --}}/", $template->getContents(), $templateName);
 
@@ -85,9 +92,9 @@ class PostTemplatesController extends Controller
      *
      * @param $template
      *
-     * @return mixed
+     * @return string|array
      */
-    private function getDefaultTemplateName($template)
+    private function getDefaultTemplateName($template): string|array
     {
         $relativePath = $template->getRelativePath();
         $fileName = $this->removeExtensionsFromFilename($template);
@@ -100,9 +107,9 @@ class PostTemplatesController extends Controller
      *
      * @param $template
      *
-     * @return mixed
+     * @return string|array
      */
-    private function removeExtensionsFromFilename($template)
+    private function removeExtensionsFromFilename($template): string|array
     {
         return str_replace('.blade.php', '', $template->getFilename());
     }
@@ -114,7 +121,7 @@ class PostTemplatesController extends Controller
      *
      * @return bool
      */
-    private function hasSubdirectory($relativePath)
+    private function hasSubdirectory($relativePath): bool
     {
         return ! empty($relativePath);
     }

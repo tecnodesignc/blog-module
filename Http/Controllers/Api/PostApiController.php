@@ -2,6 +2,7 @@
 
 namespace Modules\Blog\Http\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Log;
 use Mockery\CountValidator\Exception;
@@ -17,7 +18,7 @@ class PostApiController extends BaseApiController
     /**
      * @var PostRepository
      */
-    private $post;
+    private PostRepository $post;
 
     public function __construct(PostRepository $post)
     {
@@ -28,9 +29,9 @@ class PostApiController extends BaseApiController
     /**
      * GET ITEMS
      *
-     * @return mixed
+     * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         try {
             //Get Parameters from URL.
@@ -54,13 +55,14 @@ class PostApiController extends BaseApiController
         return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
     }
 
-  /**
+    /**
      * GET A ITEM
      *
      * @param $criteria
-     * @return mixed
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function show($criteria,Request $request)
+    public function show($criteria,Request $request): JsonResponse
     {
       try {
         //Get Parameters from URL.
@@ -88,9 +90,9 @@ class PostApiController extends BaseApiController
      * CREATE A ITEM
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResponse
      */
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
         \DB::beginTransaction();
         try {
@@ -119,9 +121,9 @@ class PostApiController extends BaseApiController
      *
      * @param $criteria
      * @param Request $request
-     * @return mixed
+     * @return JsonResponse
      */
-    public function update($criteria, Request $request)
+    public function update($criteria, Request $request): JsonResponse
     {
         \DB::beginTransaction(); //DB Transaction
         try {
@@ -156,9 +158,10 @@ class PostApiController extends BaseApiController
      * DELETE A ITEM
      *
      * @param $criteria
-     * @return mixed
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function delete($criteria, Request $request)
+    public function delete($criteria, Request $request): JsonResponse
     {
         \DB::beginTransaction();
         try {

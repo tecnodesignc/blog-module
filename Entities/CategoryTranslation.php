@@ -20,7 +20,7 @@ class CategoryTranslation extends Model
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -29,7 +29,8 @@ class CategoryTranslation extends Model
         ];
     }
 
-    public function getTranslatableOptionAttribute($value) {
+    public function getTranslatableOptionAttribute($value): mixed
+    {
 
         $options=json_decode($value);
         return $options;
@@ -39,11 +40,16 @@ class CategoryTranslation extends Model
     /**
      * @return mixed
      */
-    public function getMetaTitleAttribute(){
+    public function getMetaTitleAttribute(): mixed
+    {
 
         return $this->meta_title ?? $this->title;
     }
-    public function getMetaDescriptionAttribute(){
+    /**
+     * @return mixed
+     */
+    public function getMetaDescriptionAttribute(): mixed
+    {
 
         return $this->meta_description ?? substr(strip_tags($this->description??''),0,150);
     }

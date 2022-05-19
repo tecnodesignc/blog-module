@@ -2,6 +2,7 @@
 
 namespace Modules\Blog\Events;
 
+use Illuminate\Database\Eloquent\Model;
 use Modules\Blog\Entities\Category;
 use Modules\Media\Contracts\StoringMedia;
 
@@ -10,11 +11,11 @@ class CategoryWasUpdated implements StoringMedia
     /**
      * @var array
      */
-    public $data;
+    public array $data;
     /**
-     * @var Post
+     * @var Category
      */
-    public $category;
+    public Category $category;
 
     public function __construct(Category $category, array $data)
     {
@@ -24,9 +25,9 @@ class CategoryWasUpdated implements StoringMedia
 
     /**
      * Return the entity
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
-    public function getEntity()
+    public function getEntity():Model
     {
         return $this->category;
     }
@@ -35,7 +36,7 @@ class CategoryWasUpdated implements StoringMedia
      * Return the ALL data sent
      * @return array
      */
-    public function getSubmissionData()
+    public function getSubmissionData():array
     {
         return $this->data;
     }

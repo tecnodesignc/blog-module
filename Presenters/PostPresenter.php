@@ -5,17 +5,19 @@ namespace Modules\Blog\Presenters;
 use Laracasts\Presenter\Presenter;
 use Modules\Blog\Entities\Status;
 use Modules\Blog\Repositories\PostRepository;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class PostPresenter extends Presenter
 {
     /**
      * @var Status
      */
-    protected $status;
+    protected Status $status;
     /**
      * @var PostRepository
      */
-    private $post;
+    private mixed $post;
 
     public function __construct($entity)
     {
@@ -28,7 +30,7 @@ class PostPresenter extends Presenter
      * Get the previous post of the current post
      * @return object
      */
-    public function previous()
+    public function previous(): object
     {
         return $this->post->getPreviousOf($this->entity);
     }
@@ -37,7 +39,7 @@ class PostPresenter extends Presenter
      * Get the next post of the current post
      * @return object
      */
-    public function next()
+    public function next(): object
     {
         return $this->post->getNextOf($this->entity);
     }
@@ -45,6 +47,8 @@ class PostPresenter extends Presenter
     /**
      * Get the post status
      * @return string
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function status(): string
     {

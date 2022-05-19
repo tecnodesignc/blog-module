@@ -2,6 +2,7 @@
 
 namespace Modules\Blog\Http\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Log;
 use Mockery\CountValidator\Exception;
@@ -17,12 +18,13 @@ use Route;
 
 class CategoryApiController extends BaseApiController
 {
+
+    private PostRepository $post;
     /**
      *
      * @var CategoryRepository
      */
-    private $post;
-    private $category;
+    private CategoryRepository $category;
 
     public function __construct(PostRepository $post, CategoryRepository $category)
     {
@@ -35,10 +37,10 @@ class CategoryApiController extends BaseApiController
      * Get Data from Categories
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResponse
      */
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         try {
 
@@ -63,12 +65,13 @@ class CategoryApiController extends BaseApiController
     }
 
     /**
-       * GET A ITEM
-       *
-       * @param $criteria
-       * @return mixed
-       */
-      public function show($criteria,Request $request)
+     * GET A ITEM
+     *
+     * @param $criteria
+     * @param Request $request
+     * @return JsonResponse
+     */
+      public function show($criteria,Request $request): JsonResponse
       {
         try {
           //Get Parameters from URL.
@@ -97,9 +100,9 @@ class CategoryApiController extends BaseApiController
      * Create a Category
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResponse
      */
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
         \DB::beginTransaction();
         try {
@@ -127,10 +130,10 @@ class CategoryApiController extends BaseApiController
      * Update a Category
      *
      * @param $criteria
-     * @param $request
-     * @return mixed
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function update($criteria, Request $request)
+    public function update($criteria, Request $request): JsonResponse
     {
         \DB::beginTransaction(); //DB Transaction
         try {
@@ -168,8 +171,8 @@ class CategoryApiController extends BaseApiController
      * Delete a Category
      *
      * @param $criteria
-     * @param $request
-     * @return mixed
+     * @param Request $request
+     * @return JsonResponse
      */
     public function delete($criteria, Request $request)
     {

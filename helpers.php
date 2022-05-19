@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Database\Eloquent\Collection;
 use Modules\blog\Entities\Category;
 use Modules\blog\Entities\Post;
-use Modules\blog\Entities\Tag;
+use Modules\Tag\Entities\Tag;
 use Modules\User\Entities\Sentinel\User;
 use Modules\blog\Entities\Status;
 
@@ -37,7 +38,7 @@ if (!function_exists('get_posts')) {
 
 if (!function_exists('all_users_by_rol')) {
 
-    function all_users_by_rol($roleName)
+    function all_users_by_rol($roleName): Collection|array
     {
 
         $users = User::with(['roles'])
@@ -52,7 +53,7 @@ if (!function_exists('all_users_by_rol')) {
 
 if (!function_exists('get_categories')) {
 
-    function get_categories($options = array())
+    function get_categories($options = array()): Collection|array
     {
         $default_options = array(
             'include' => array(),//id de Categorias  para incluir en una consulta, se envia como arreglo ['include'=>[1,2,3]]
@@ -130,7 +131,7 @@ if (!function_exists('format_date')) {
      * @return string
      **/
 
-    function format_date($date, $format = '%A, %B %d, %Y')
+    function format_date(object $date, string $format = '%A, %B %d, %Y'): string
     {
 
         return strftime($format, strtotime($date));
@@ -144,7 +145,7 @@ setlocale(LC_TIME, config('encore.blog.config.localeTime', 'en_US.UTF-8'));
 
 
 if(!function_exists('get_status')){
-    function get_status($status)
+    function get_status($status): int
     {
         switch ($status) {
             case trans('blog::common.status.draft'):

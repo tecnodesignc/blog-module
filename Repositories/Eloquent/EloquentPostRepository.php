@@ -2,6 +2,10 @@
 
 namespace Modules\Blog\Repositories\Eloquent;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Modules\Blog\Entities\Post;
 use Modules\Blog\Entities\Status;
 use Modules\Blog\Events\PostWasCreated;
 use Modules\Blog\Events\PostWasDeleted;
@@ -13,10 +17,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EloquentPostRepository extends EloquentBaseRepository implements PostRepository
 {
-    /**
-     * @inheritdoc
-     */
-    public function findBySlug($slug)
+
+
+    public function findBySlug($slug): Model|Collection|Builder|array|null
     {
         if (method_exists($this->model, 'translations')) {
             return $this->model->whereHas('translations', function (Builder $q) use ($slug) {
@@ -29,9 +32,9 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
 
     /**
      * @param integer $id
-     * @return object
+     * @return LengthAwarePaginator
      */
-    public function whereCategory(int $id):object
+    public function whereCategory(int $id):LengthAwarePaginator
     {
         $query = $this->model->with('categories', 'category', 'tags', 'user', 'translations');
         $query->whereHas('categories', function ($q) use ($id) {
@@ -45,29 +48,28 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
     /**
      * Find post by id
      * @param int $id
-     * @return object
+     * @return Model|Collection|Builder|array|null
      */
-    public function find($id)
+    public function find(int $id): Model|Collection|Builder|array|null
     {
         return $this->model->with('translations', 'category', 'categories', 'tags', 'user')->find($id);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function all()
+    public function all(): Collection
     {
         return $this->model->with( 'translations')->orderBy('created_at', 'DESC')->get();
     }
 
 
     /**
-     * create a resource
-     * Create a blog post
-     * @param array $data
-     * @return Post
+     * Create a resource
+     * @param  $data
+     * @return Model|Collection|Builder|array|null
      */
-    public function create($data)
+    public function create($data): Model|Collection|Builder|array|null
     {
         $post = $this->model->create($data);
         $post->categories()->sync(array_merge(Arr::get($data, 'categories', []), [$post->category_id]));
@@ -78,11 +80,11 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
 
     /**
      * Update a resource
-     * @param $post
+     * @param  $model
      * @param array $data
-     * @return mixed
+     * @return Model|Collection|Builder|array|null
      */
-    public function update($post, $data)
+    public function update($model, array $data): Model|Collection|Builder|array|null
     {
         $post->update($data);
 
@@ -95,11 +97,11 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
     }
 
     /**
-     * Delete a resource
-     * @param $model
-     * @return mixed
+     * Destroy a resource
+     * @param  $model
+     * @return bool
      */
-    public function destroy($model)
+    public function destroy($model): bool
     {
         $model->untag();
         event(new PostWasDeleted($model->id, get_class($model)));
@@ -108,11 +110,11 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
     }
 
     /**
-     * Standard Api Method
-     * @param bool $params
-     * @return mixed
+     * Get resources by an array of attributes
+     * @param bool|object $params
+     * @return LengthAwarePaginator|Collection
      */
-    public function getItemsBy($params = false)
+    public function getItemsBy($params = false): Collection|LengthAwarePaginator
     {
         /*== initialize query ==*/
         $query = $this->model->query();
@@ -225,12 +227,12 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
     }
 
     /**
-     * Standard Api Method
-     * @param $criteria
-     * @param bool $params
-     * @return mixed
+     * Get resources by an array of attributes
+     * @param string $criteria
+     * @param bool|object $params
+     * @return Model|Collection|Builder|array|null
      */
-    public function getItem($criteria, $params = false)
+    public function getItem(string $criteria, $params = false): Model|Collection|Builder|array|null
     {
         //Initialize query
         $query = $this->model->query();
@@ -278,9 +280,9 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
     /**
      * Return the latest x blog posts
      * @param int $amount
-     * @return object
+     * @return Collection
      */
-    public function latest($amount = 5)
+    public function latest(int $amount = 5): Collection
     {
         return $this->model->whereStatus(Status::PUBLISHED)->orderBy('created_at', 'desc')->take($amount)->get();
 
@@ -288,10 +290,10 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
 
     /**
      * Get the previous post of the given post
-     * @param object $post
-     * @return object
+     * @param Post $post
+     * @return Model|Collection|Builder|array|null
      */
-    public function getPreviousOf(object $post)
+    public function getPreviousOf(Post $post): Model|Collection|Builder|array|null
     {
         return $this->model->where('created_at', '<', $post->created_at)
             ->whereStatus(Status::PUBLISHED)->orderBy('created_at', 'desc')->first();
@@ -299,10 +301,10 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
 
     /**
      * Get the next post of the given post
-     * @param object $post
-     * @return object
+     * @param Post $post
+     * @return Model|Collection|Builder|array|null
      */
-    public function getNextOf(object $post)
+    public function getNextOf(Post $post): Model|Collection|Builder|array|null
     {
         return $this->model->where('created_at', '>', $post->created_at)
             ->whereStatus(Status::PUBLISHED)->first();

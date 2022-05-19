@@ -4,6 +4,9 @@ namespace Modules\Blog\Entities;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laracasts\Presenter\PresentableTrait;
 use Modules\Core\Traits\NamespacedEntity;
 use Modules\Media\Support\Traits\MediaRelation;
@@ -14,7 +17,7 @@ class Category extends Model
     use Translatable, MediaRelation, PresentableTrait, NamespacedEntity;
 
     protected $table = 'blog__categories';
-    protected static $entityNamespace = 'blog/category';
+    protected static string $entityNamespace = 'blog/category';
     public $translatedAttributes = [
         'title',
         'description',
@@ -52,27 +55,41 @@ class Category extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function parent()
+    /**
+     * @return BelongsTo
+     */
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function children()
+    /**
+     * @return HasMany
+     */
+    public function children(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    public function posts()
+    /**
+     * @return BelongsToMany
+     */
+    public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'blog__post_category')->as('posts')->with('category');
     }
 
-    /**
+    /*
      * |--------------------------------------------------------------------------
      * | MUTATORS
      * |--------------------------------------------------------------------------
      */
-    public function getOptionsAttribute($value)
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getOptionsAttribute($value): mixed
     {
         try {
             return json_decode(json_decode($value));
@@ -81,7 +98,10 @@ class Category extends Model
         }
     }
 
-    public function getSecondaryImageAttribute()
+    /**
+     * @return mixed
+     */
+    public function getSecondaryImageAttribute(): mixed
     {
         $thumbnail = $this->files()->where('zone', 'secondaryimage')->first();
         if (!$thumbnail) {
@@ -98,7 +118,10 @@ class Category extends Model
         return json_decode(json_encode($image));
     }
 
-    public function getMainImageAttribute()
+    /**
+     * @return mixed
+     */
+    public function getMainImageAttribute(): mixed
     {
         $thumbnail = $this->files()->where('zone', 'mainimage')->first();
         if (!$thumbnail) {
@@ -123,7 +146,10 @@ class Category extends Model
 
     }
 
-    public function getUrlAttribute()
+    /**
+     * @return mixed
+     */
+    public function getUrlAttribute(): mixed
     {
 
         return \URL::route(\LaravelLocalization::getCurrentLocale() . '.blog.category.' . $this->slug);

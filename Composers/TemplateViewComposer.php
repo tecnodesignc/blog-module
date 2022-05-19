@@ -11,12 +11,12 @@ class TemplateViewComposer
     /**
      * @var ThemeManager
      */
-    private $themeManager;
+    private ThemeManager $themeManager;
 
     /**
      * @var FinderService
      */
-    private $finder;
+    private FinderService $finder;
 
     public function __construct(ThemeManager $themeManager, FinderService $finder)
     {
@@ -51,7 +51,7 @@ class TemplateViewComposer
 
         return $templates;
     }
-    private function getTemplatesCategory()
+    private function getTemplatesCategory(): array
     {
         $path = $this->getCurrentThemeBasePath();
 
@@ -78,7 +78,7 @@ class TemplateViewComposer
      *
      * @return string
      */
-    private function getCurrentThemeBasePath()
+    private function getCurrentThemeBasePath(): string
     {
         return $this->themeManager->find(setting('core::template'))->getPath();
     }
@@ -90,7 +90,7 @@ class TemplateViewComposer
      *
      * @return string
      */
-    private function getTemplateName($template)
+    private function getTemplateName($template): string
     {
         preg_match("/{{-- Template: (.*) --}}/", $template->getContents(), $templateName);
 

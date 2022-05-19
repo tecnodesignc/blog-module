@@ -39,7 +39,7 @@ class PostTranslation extends Model
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -48,7 +48,12 @@ class PostTranslation extends Model
         ];
     }
 
-    public function getTranslatableOptionAttribute($value) {
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getTranslatableOptionAttribute($value): mixed
+    {
 
         $options=json_decode($value);
         return $options;
@@ -58,7 +63,7 @@ class PostTranslation extends Model
     /**
      * @return mixed
      */
-    public function getMetaDescriptionAttribute()
+    public function getMetaDescriptionAttribute(): mixed
     {
 
         return $this->meta_description ?? $this->summary;
@@ -67,13 +72,17 @@ class PostTranslation extends Model
     /**
      * @return mixed
      */
-    public function getMetaTitleAttribute()
+    public function getMetaTitleAttribute(): mixed
     {
 
         return $this->meta_title ?? $this->title;
     }
 
-    public function getContentAttribute($content)
+    /**
+     * @param $content
+     * @return string
+     */
+    public function getContentAttribute($content): string
     {
         event($event = new PostContentIsRendering($content));
 

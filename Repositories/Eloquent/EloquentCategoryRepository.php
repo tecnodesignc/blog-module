@@ -2,6 +2,10 @@
 
 namespace Modules\Blog\Repositories\Eloquent;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Modules\Blog\Entities\Category;
 use Modules\Blog\Events\CategoryWasCreated;
 use Modules\Blog\Events\CategoryWasDeleted;
 use Modules\Blog\Events\CategoryWasUpdated;
@@ -11,10 +15,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EloquentCategoryRepository extends EloquentBaseRepository implements CategoryRepository
 {
+
     /**
-     * @inheritdoc
+     * @param $id
+     * @return Model|Collection|Builder|array|null
      */
-    public function find($id)
+    public function find($id): Model|Collection|Builder|array|null
     {
         if (method_exists($this->model, 'translations')) {
             return $this->model->with('translations','parent', 'children')->find($id);
@@ -26,9 +32,9 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements Categ
      * Find a resource by the given slug
      *
      * @param string $slug
-     * @return object
+     * @return Model|Collection|Builder|array|null
      */
-    public function findBySlug($slug)
+    public function findBySlug(string $slug): Model|Collection|Builder|array|null
     {
         if (method_exists($this->model, 'translations')) {
             return $this->model->whereHas('translations', function (Builder $q) use ($slug) {
@@ -40,11 +46,11 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements Categ
     }
 
     /**
-     * Standard Api Method
-     * @param bool $params
-     * @return mixed
+     * Get resources by an array of attributes
+     * @param bool|object $params
+     * @return LengthAwarePaginator|Collection
      */
-    public function getItemsBy($params = false)
+    public function getItemsBy($params = false):LengthAwarePaginator|Collection
     {
         /*== initialize query ==*/
         $query = $this->model->query();
@@ -117,9 +123,9 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements Categ
      * Standard Api Method
      * @param $criteria
      * @param bool $params
-     * @return mixed
+     * @return Model|Collection|Builder|array|null
      */
-    public function getItem($criteria, $params = false)
+    public function getItem($criteria, $params = false): Model|Collection|Builder|array|null
     {
         //Initialize query
         $query = $this->model->query();
@@ -165,9 +171,9 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements Categ
     /**
      * Standard Api Method
      * @param $data
-     * @return mixed
+     * @return Model|Collection|Builder|array|null
      */
-    public function create($data)
+    public function create($data):Model|Collection|Builder|array|null
     {
 
         $category = $this->model->create($data);
@@ -179,21 +185,25 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements Categ
 
     /**
      * Update a resource
-     * @param $category
+     * @param $model
      * @param array $data
-     * @return mixed
+     * @return Model|Collection|Builder|array|null
      */
-    public function update($category, $data)
+    public function update($model, array $data):Model|Collection|Builder|array|null
     {
-        $category->update($data);
+        $model->update($data);
 
-        event(new CategoryWasUpdated($category, $data));
+        event(new CategoryWasUpdated($model, $data));
 
-        return $category;
+        return $model;
     }
+    /**
+     * Destroy a resource
+     * @param  $model
+     * @return bool
+     */
 
-
-    public function destroy($model)
+    public function destroy($model): bool
     {
         event(new CategoryWasDeleted($model->id, get_class($model)));
 

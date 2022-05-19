@@ -9,12 +9,16 @@ class PostWasDeleted implements DeletingMedia
     /**
      * @var string
      */
-    private $postClass;
+    private string $postClass;
     /**
      * @var int
      */
-    private $postId;
+    private int $postId;
 
+    /**
+     * @param $postId
+     * @param $postClass
+     */
     public function __construct($postId, $postClass)
     {
         $this->postClass = $postClass;
@@ -25,7 +29,7 @@ class PostWasDeleted implements DeletingMedia
      * Get the entity ID
      * @return int
      */
-    public function getEntityId()
+    public function getEntityId(): int
     {
         return $this->postId;
     }
@@ -34,7 +38,7 @@ class PostWasDeleted implements DeletingMedia
      * Get the class name the imageables
      * @return string
      */
-    public function getClassName()
+    public function getClassName(): string
     {
         return $this->postClass;
     }
