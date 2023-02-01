@@ -44,7 +44,6 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
         return $query->paginate(setting('blog::posts-per-page'));
     }
 
-
     /**
      * Find post by id
      * @param int $id
@@ -62,7 +61,6 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
     {
         return $this->model->with( 'translations')->orderBy('created_at', 'DESC')->get();
     }
-
 
     /**
      * Create a resource
@@ -86,14 +84,14 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
      */
     public function update($model, array $data): Model|Collection|Builder|array|null
     {
-        $post->update($data);
+        $model->update($data);
 
-        $post->categories()->sync(array_merge(Arr::get($data, 'categories', []), [$post->category_id]));
+        $model->categories()->sync(array_merge(Arr::get($data, 'categories', []), [$model->category_id]));
 
-        event(new PostWasUpdated($post, $data));
-        $post->setTags(Arr::get($data, 'tags', []));
+        event(new PostWasUpdated($model, $data));
+        $model->setTags(Arr::get($data, 'tags', []));
 
-        return $post;
+        return $model;
     }
 
     /**
@@ -175,9 +173,17 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
 
             if (isset($filter->search) && !empty($filter->search)) { //si hay que filtrar por rango de precio
                 $criterion = $filter->search;
+                $searchValues = preg_split('/\s+/', $criterion, -1, PREG_SPLIT_NO_EMPTY);
+                $query->whereHas('translations', function (Builder $q) use ($searchValues) {
+                    $q->where(function ($s) use ($searchValues){
 
-                $query->whereHas('translations', function (Builder $q) use ($criterion) {
-                    $q->where('title', 'like', "%{$criterion}%");
+                        foreach ($searchValues as $value){
+                            if(strlen($value)>3){
+                                $s->orWhere('title', 'like', "%{$value}%");
+                            }
+                        }
+                    });
+
                 });
             }
 
@@ -213,6 +219,7 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
         if (isset($params->fields) && count($params->fields))
             $query->select($params->fields);
         /*== REQUEST ==*/
+
         if (isset($params->page) && $params->page) {
             return $query->paginate($params->take);
         } else {

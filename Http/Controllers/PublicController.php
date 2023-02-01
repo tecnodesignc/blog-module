@@ -11,7 +11,7 @@ use Modules\Core\Http\Controllers\BasePublicController;
 use Modules\Blog\Repositories\CategoryRepository;
 use Modules\Blog\Repositories\PostRepository;
 use Modules\Tag\Repositories\TagRepository;
-use Request;
+use Illuminate\Http\Request;
 use Route;
 
 class PublicController extends BasePublicController
@@ -40,11 +40,11 @@ class PublicController extends BasePublicController
     /**
      * @return Factory|View|Application
      */
-    public function index(): Factory|View|Application
+    public function index(Request $request): Factory|View|Application
     {
-        $slug = Request::path();
-        $uris=explode('/',$slug);
-        if (count($uris)>1)$slug=$uris[1];
+        $slug = $request->path();
+        $uris = explode('/', $slug);
+        if (count($uris) > 1) $slug = $uris[1];
         $category = $this->category->findBySlug($slug);
         $posts = $this->post->whereCategory($category->id);
         //Get Custom Template.
@@ -67,6 +67,21 @@ class PublicController extends BasePublicController
 
         return view($template, compact('post', 'category', 'tags'));
 
+
+    }
+
+
+    /**
+     * @return Factory|View|Application
+     */
+    public function search(Request $request): Factory|View|Application
+    {
+        $params = $request->input('q');
+        $page=$request->input('page')??1;
+
+        $posts= $this->post->getItemsBy(json_decode(json_encode(['include'=>['*'],'filter'=>['search'=>$params],'take'=>setting('blog::posts-per-page'),'page'=>$page])));
+
+        return view('blog.search', compact('posts'));
 
     }
 
@@ -115,7 +130,7 @@ class PublicController extends BasePublicController
      */
     private function getTemplateForPost($post): string
     {
-        return (view()->exists('blog.post.'.$post->template)) ? 'blog.post.'.$post->template : 'blog.post.default';
+        return (view()->exists('blog.post.' . $post->template)) ? 'blog.post.' . $post->template : 'blog.post.default';
     }
 
     /**
@@ -126,7 +141,7 @@ class PublicController extends BasePublicController
      */
     private function getTemplateForCategory($category): string
     {
-        return (view()->exists('blog.category.'.$category->template)) ? 'blog.category.'.$category->template : 'blog.category.default';
+        return (view()->exists('blog.category.' . $category->template)) ? 'blog.category.' . $category->template : 'blog.category.default';
     }
 
 }

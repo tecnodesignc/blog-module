@@ -24,6 +24,7 @@ class Post extends Model
     public $translatedAttributes = [
         'title',
         'slug',
+        'summary',
         'content',
         'meta_title',
         'meta_description',

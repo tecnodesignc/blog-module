@@ -1,5 +1,9 @@
 url: https://github.com/tecnodesignc/blog-module
 versions:
+  "2.0.1":
+      changed:
+        - Search eloquent query
+        - Search route and controller
     "2.0.0":
       changed:
         - Laravel 9 compatibility

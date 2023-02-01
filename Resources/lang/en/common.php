@@ -52,7 +52,7 @@ return [
     'author' => 'Author',
     'by'=>'by',
     'default_category' => 'Default Category',
-
+    'search'=>'search',
     'admin_notes' => 'Admin`s notes',
     'created_at' => 'Creation date',
     'parent' => 'Parent',

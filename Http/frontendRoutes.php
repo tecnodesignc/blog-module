@@ -26,10 +26,10 @@ if (!App::runningInConsole()) {
     }
 }
 /** @var Router $router */
-$router->group(['prefix' => trans('blog::tag.uri')], function (Router $router) use ($locale) {
-    $router->get('{slug}', [
-        'as' => $locale . '.blog.tag.slug',
-        'uses' => 'PublicController@tag',
+$router->group(['prefix' => trans('blog::common.search')], function (Router $router) use ($locale) {
+    $router->get('/', [
+        'as' => $locale . '.blog.post.search',
+        'uses' => 'PublicController@search',
         'middleware' => config('encore.blog.config.middleware'),
     ]);
 });
