@@ -17,8 +17,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EloquentPostRepository extends EloquentBaseRepository implements PostRepository
 {
-
-
     public function findBySlug($slug): Model|Collection|Builder|array|null
     {
         if (method_exists($this->model, 'translations')) {
@@ -27,7 +25,7 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
             })->with('translations', 'category', 'categories', 'tags', 'user')->whereStatus(Status::PUBLISHED)->firstOrFail();
         }
 
-        return $this->model->where('slug', $slug)->with('category', 'categories', 'tags', 'user')->whereStatus(Status::PUBLISHED)->firstOrFail();;
+        return $this->model->where('slug', $slug)->with('category', 'categories', 'tags', 'user')->whereStatus(Status::PUBLISHED)->firstOrFail();
     }
 
     /**
@@ -130,13 +128,7 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
         /*== FILTERS ==*/
         if (isset($params->filter)) {
             $filter = $params->filter;//Short filter
-            if (isset($filter->categories) && !empty($filter->categories)) {
 
-                $categories = is_array($filter->categories) ? $filter->categories : [$filter->categories];
-                $query->whereHas('categories', function ($q) use ($categories) {
-                    $q->whereIn('category_id', $categories);
-                });
-            }
 
             if (isset($filter->users) && !empty($filter->users)) {
                 $users = is_array($filter->users) ? $filter->users : [$filter->users];

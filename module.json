@@ -3,13 +3,13 @@
     "alias": "blog",
     "title": "Blog Module",
     "author": "Marcos Rativa",
-    "description": "Blog module for EncoreCMS 2.0",
+    "description": "Blog module for EncoreCMS 3.0",
     "keywords": [
         "EncoreCMS",
         "Blog",
         "Journal"
     ],
-    "version": "2.0.0",
+    "version": "3.0.0",
     "priority": 8888,
     "providers": [
         "Modules\\Blog\\Providers\\BlogServiceProvider",
@@ -21,5 +21,5 @@
         "helpers.php"
     ],
     "requires": [],
-    "minimumCoreVersion": "2.0"
+    "minimumCoreVersion": "3.0"
 }
